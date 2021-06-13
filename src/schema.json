@@ -1,0 +1,87 @@
+{
+  "personal": {
+    "fields": [
+      {
+        "name": "First name",
+        "type": "text"
+      },
+      {
+        "name": "Last name",
+        "type": "text"
+      },
+      {
+        "name": "Address",
+        "type": "text"
+      },
+      {
+        "name": "Phone number",
+        "type": "text"
+      },
+      {
+        "name": "Email",
+        "type": "email"
+      },
+      {
+        "name": "Details",
+        "type": "textarea"
+      },
+      {
+        "name": "Skills",
+        "type": "textarea"
+      }
+    ]
+  },
+  "experience": {
+    "fields": [
+      {
+        "name": "Position",
+        "type": "text"
+      },
+      {
+        "name": "Company",
+        "type": "text"
+      },
+      {
+        "name": "Address",
+        "type": "text"
+      },
+      {
+        "name": "From",
+        "type": "date"
+      },
+      {
+        "name": "To",
+        "type": "date"
+      },
+      {
+        "name": "Job description",
+        "type": "textarea"
+      }
+    ]
+  },
+  "education": {
+    "fields": [
+      {
+        "name": "University",
+        "type": "text"
+      },
+      {
+        "name": "Address",
+        "type": "text"
+      },
+      {
+        "name": "Degree",
+        "type": "text"
+      },
+      {
+        "name": "From",
+        "type": "date"
+      },
+
+      {
+        "name": "To",
+        "type": "date"
+      }
+    ]
+  }
+}
