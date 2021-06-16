@@ -90,6 +90,7 @@ const formSchema = [
         name: 'work-end-date',
         displayName: 'To',
         type: 'date',
+        helperText: 'Leave this out if still working at present',
       },
       {
         name: 'job-description',

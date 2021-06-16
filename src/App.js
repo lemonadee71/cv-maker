@@ -6,6 +6,7 @@ import formSchema from './formSchema';
 
 import Container from '@material-ui/core/Container';
 import FormBlock from './components/FormBlock';
+import './styles.css';
 
 const App = () => {
   const [state, dispatch] = useReducer(
@@ -16,10 +17,9 @@ const App = () => {
 
   return (
     <>
-      <header>
-        <h1>CV Maker</h1>
+      <header className="header">
+        <h1 className="header__title">CV Maker</h1>
       </header>
-      <button onClick={() => console.log(state)}>Show State</button>
       <AppProvider value={contextValue}>
         <Container maxWidth={'sm'}>
           {Object.entries(state).map(([id, { name, groups, schema }]) => (

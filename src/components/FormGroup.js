@@ -33,16 +33,23 @@ const FormGroup = ({ blockId, id, fields, variant }) => {
   // };
 
   const inputFields = Object.entries(fields).map(
-    ([name, { value, schema }]) => {
+    ([name, { value, schema, error }]) => {
       const props = {
         value,
+        error,
         variant,
         key: name,
+        className: 'form-block__field',
         inputProps: { 'data-fieldname': name },
+        InputLabelProps: schema.type === 'date' ? { shrink: true } : null,
         type: schema.type !== 'multiline' ? schema.type : 'text',
         label: schema.displayName,
         defaultValue: schema.defaultValue,
+        helperText: schema.helperText || '',
         fullWidth: schema.fullWidth || true,
+        required: schema.required,
+        autoComplete: schema.autoComplete,
+        rows: schema.rows,
       };
 
       if (schema.type === 'multiline') {
