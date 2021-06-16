@@ -1,80 +1,40 @@
-import React, { useReducer, useEffect, useMemo } from 'react';
-import AppContext, { contextReducer } from './context';
-import schemas from './schema.json';
+import React, { useReducer, useMemo } from 'react';
+import { appContextReducer } from './reducers/AppReducer';
+import { AppProvider } from './context';
+import { convertFormBlockSchema } from './utils';
+import formSchema from './formSchema';
 
-import Form from './components/Form';
 import Container from '@material-ui/core/Container';
+import FormBlock from './components/FormBlock';
 
 const App = () => {
-  const [state, dispatch] = useReducer(contextReducer, {
-    personal: [],
-    experience: [],
-    education: [],
-  });
-
+  const [state, dispatch] = useReducer(
+    appContextReducer,
+    convertFormBlockSchema(formSchema)
+  );
   const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch]);
 
-  useEffect(() => {
-    dispatch({
-      type: 'ADD',
-      payload: { key: 'personal', schema: schemas.personal },
-    });
-    dispatch({
-      type: 'ADD',
-      payload: { key: 'experience', schema: schemas.experience },
-    });
-
-    dispatch({
-      type: 'ADD',
-      payload: { key: 'education', schema: schemas.education },
-    });
-  }, []);
-
   return (
-    <div className="App">
+    <>
       <header>
-        <h2>CV Maker</h2>
+        <h1>CV Maker</h1>
       </header>
-      <AppContext.Provider value={contextValue}>
-        <Container>
-          <h1>This is my CV Maker</h1>
-          <div data-name="personal">
-            <h2>Personal Information</h2>
-            {state.personal.map((data) => (
-              <Form
-                key={data.id}
-                type={'personal'}
-                data={data}
-                schema={schemas.personal}
-              ></Form>
-            ))}
-          </div>
-          <div data-name="experience">
-            <h2>Work Experience</h2>
-            {state.experience.map((data) => (
-              <Form
-                key={data.id}
-                type={'experience'}
-                data={data}
-                schema={schemas.experience}
-              ></Form>
-            ))}
-          </div>
-          <div data-name="education">
-            <h2>Education</h2>
-            {state.education.map((data) => (
-              <Form
-                key={data.id}
-                type={'education'}
-                data={data}
-                schema={schemas.education}
-              ></Form>
-            ))}
-          </div>
+      <button onClick={() => console.log(state)}>Show State</button>
+      <AppProvider value={contextValue}>
+        <Container maxWidth={'sm'}>
+          {Object.entries(state).map(([id, { name, groups, schema }]) => (
+            <FormBlock
+              key={id}
+              blockName={name}
+              blockId={id}
+              groups={groups}
+              schema={schema}
+              variant={schema.variant}
+            />
+          ))}
         </Container>
-      </AppContext.Provider>
-      <button onClick={() => console.log(state)}>Show</button>
-    </div>
+      </AppProvider>
+    </>
   );
 };
 

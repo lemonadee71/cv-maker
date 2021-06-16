@@ -1,37 +1,14 @@
-import { createContext } from 'react';
-import { convertSchema } from './utils';
-
-const contextReducer = (state, action) => {
-  const { key } = action.payload;
-
-  switch (action.type) {
-    case 'ADD':
-      return {
-        ...state,
-        [key]: [...state[key], convertSchema(action.payload.schema)],
-      };
-    case 'DELETE':
-      return {
-        ...state,
-        [key]: state[key].filter((child) => child.id !== action.payload.id),
-      };
-    case 'EDIT':
-      console.log(action);
-      return {
-        ...state,
-        [key]: state[key].map((child) => {
-          if (child.id === action.payload.data.id) return action.payload.data;
-
-          return child;
-        }),
-      };
-
-    default:
-      return state;
-  }
-};
+import { createContext, useContext } from 'react';
 
 const AppContext = createContext(null);
+const AppProvider = AppContext.Provider;
 
-export default AppContext;
-export { contextReducer };
+const useAppReducer = () => {
+  const context = useContext(AppContext);
+  if (context === undefined) {
+    throw new Error('useAppReducer must be used within a AppProvider');
+  }
+  return context;
+};
+
+export { AppProvider, useAppReducer };
