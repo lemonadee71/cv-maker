@@ -28,11 +28,13 @@ const App = () => {
       </header>
       <button onClick={togglePreview}>Toggle preview</button>
       <AppProvider value={contextValue}>
-        <Container maxWidth={'sm'}>
-          {showPreview ? (
+        {showPreview ? (
+          <Container maxWidth={'md'}>
             <Preview data={state} />
-          ) : (
-            Object.entries(state).map(([name, { id, groups, schema }]) => (
+          </Container>
+        ) : (
+          <Container maxWidth={'md'}>
+            {Object.entries(state).map(([name, { id, groups, schema }]) => (
               <FormBlock
                 key={id}
                 blockName={name}
@@ -40,9 +42,9 @@ const App = () => {
                 schema={schema}
                 variant={schema.variant}
               />
-            ))
-          )}
-        </Container>
+            ))}
+          </Container>
+        )}
       </AppProvider>
     </>
   );

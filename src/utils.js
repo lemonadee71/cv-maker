@@ -27,4 +27,19 @@ const convertFormBlockSchema = (schema) => {
   return obj;
 };
 
-export { convertFormBlockSchema, convertFormGroupSchema, uniqid };
+const capitalizeEach = (type, str) => {
+  console.log(str);
+  const separator = type === 'word' ? ' ' : '.';
+
+  return str
+    .split(separator)
+    .map((str) => str && str[0].toUpperCase() + str.substr(1, str.length))
+    .join(separator);
+};
+
+export {
+  convertFormBlockSchema,
+  convertFormGroupSchema,
+  capitalizeEach,
+  uniqid,
+};

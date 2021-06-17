@@ -2,8 +2,9 @@ import React from 'react';
 import { useAppReducer } from '../context';
 
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
 
-const FormGroup = ({ blockName, id, fields, variant }) => {
+const FormGroup = ({ blockName, id, fields, variant, formGroupStyle }) => {
   const { dispatch } = useAppReducer();
 
   // TODO: Structure state in a way that only one form group gets rerendered
@@ -47,14 +48,20 @@ const FormGroup = ({ blockName, id, fields, variant }) => {
         props.multiline = true;
       }
 
-      return <TextField {...props} onChange={handleChange} />;
+      return (
+        <Grid item {...schema.muiStyle}>
+          <TextField {...props} onChange={handleChange} />
+        </Grid>
+      );
     }
   );
 
   return (
-    <div>
-      <form>{inputFields}</form>
-    </div>
+    <form>
+      <Grid container {...formGroupStyle}>
+        {inputFields}
+      </Grid>
+    </form>
   );
 };
 

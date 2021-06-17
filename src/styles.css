@@ -1,5 +1,24 @@
+:root {
+  --preview-lcol-width: 35%;
+}
+
 .header {
   height: 4rem;
   width: 90%;
   margin: auto;
+}
+
+.preview {
+  display: flex;
+  flex-direction: row;
+}
+
+.preview__col-left {
+  flex-basis: var(--preview-lcol-width);
+  border: 1px solid black;
+}
+
+.preview__col-right {
+  border: 1px solid black;
+  flex-basis: calc(100% - var(--preview-lcol-width));
 }

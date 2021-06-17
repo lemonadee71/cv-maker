@@ -1,13 +1,28 @@
 import React from 'react';
+import Chip from '@material-ui/core/Chip';
+import { capitalizeEach } from '../../utils';
 
 const PersonalInfo = ({ data }) => {
-  const { firstName, lastName, address, phone, email, details, skills } =
-    data.fields;
+  const {
+    firstName,
+    middleInitial,
+    lastName,
+    address,
+    phone,
+    email,
+    details,
+    skills,
+  } = data.fields;
 
   return (
     <>
       <h3>
-        {firstName.value} {lastName.value}
+        {capitalizeEach(
+          'word',
+          `${firstName.value} ${middleInitial.value}${
+            middleInitial.value ? '.' : ''
+          } ${lastName.value}`
+        )}
       </h3>
       <p>
         <span>{email.value}</span>
@@ -15,9 +30,15 @@ const PersonalInfo = ({ data }) => {
         <span>{address.value}</span>
       </p>
       <p>Details</p>
-      <p>{details.value}</p>
+      <p>{capitalizeEach('sentence', details.value)}</p>
       <p>Skills</p>
-      <p>{skills.value}</p>
+      <div>
+        {skills.value
+          .split(',')
+          .map(
+            (skill) => skill && <Chip label={skill.trim()} variant="outlined" />
+          )}
+      </div>
     </>
   );
 };
