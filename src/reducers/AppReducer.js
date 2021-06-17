@@ -11,12 +11,12 @@ const appContextReducer = (state, action) => {
     //     [key]: state[key].filter((child) => child.id !== action.payload.id),
     //   };
     case 'EDIT':
-      const { blockId, groupId, data } = action.payload;
-      const block = state[blockId];
+      const { blockName, groupId, data } = action.payload;
+      const block = state[blockName];
 
       return {
         ...state,
-        [blockId]: {
+        [blockName]: {
           ...block,
           groups: block.groups.map((group) => {
             if (group.id === groupId) return { ...group, fields: data };

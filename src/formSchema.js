@@ -12,14 +12,14 @@ const formSchema = [
     // size : 'medium|small'
     fields: [
       {
-        name: 'first-name',
+        name: 'firstName',
         displayName: 'First name',
         type: 'text',
         required: true,
         autocomplete: true,
       },
       {
-        name: 'last-name',
+        name: 'lastName',
         displayName: 'Last name',
         type: 'text',
         required: true,
@@ -54,6 +54,7 @@ const formSchema = [
         name: 'skills',
         displayName: 'Skills',
         type: 'multiline',
+        helperText: 'Separate different skills with comma',
         rows: 3,
       },
     ],
@@ -76,24 +77,24 @@ const formSchema = [
         autocomplete: true,
       },
       {
-        name: 'company-address',
+        name: 'companyAddress',
         displayName: 'Address',
         type: 'text',
         autocomplete: true,
       },
       {
-        name: 'work-start-date',
+        name: 'workStartDate',
         displayName: 'From',
         type: 'date',
       },
       {
-        name: 'work-end-date',
+        name: 'workEndDate',
         displayName: 'To',
         type: 'date',
         helperText: 'Leave this out if still working at present',
       },
       {
-        name: 'job-description',
+        name: 'jobDescription',
         displayName: 'Job description',
         type: 'multiline',
         rows: 5,
@@ -112,7 +113,7 @@ const formSchema = [
         autocomplete: true,
       },
       {
-        name: 'univ-address',
+        name: 'universityAddress',
         displayName: 'Address',
         type: 'text',
       },
@@ -123,12 +124,12 @@ const formSchema = [
         autocomplete: true,
       },
       {
-        name: 'school-start-date',
+        name: 'schoolStartDate',
         displayName: 'From',
         type: 'date',
       },
       {
-        name: 'school-end-date',
+        name: 'schoolEndDate',
         displayName: 'To',
         type: 'date',
       },

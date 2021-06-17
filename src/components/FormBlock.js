@@ -1,14 +1,14 @@
 import React from 'react';
 import FormGroup from './FormGroup';
 
-const FormBlock = ({ blockName, blockId, groups, schema, variant }) => {
+const FormBlock = ({ blockName, groups, schema, variant }) => {
   return (
-    <div class="form-block" data-blockname={blockName}>
-      <h2 class="form-block__header">{schema.displayName}</h2>
+    <div className="form-block" data-blockname={blockName}>
+      <h2 className="form-block__header">{schema.displayName}</h2>
       {groups.map((group) => (
         <FormGroup
           key={group.id}
-          blockId={blockId}
+          blockName={blockName}
           id={group.id}
           type={blockName}
           fields={group.fields}

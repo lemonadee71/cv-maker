@@ -3,7 +3,7 @@ import { useAppReducer } from '../context';
 
 import TextField from '@material-ui/core/TextField';
 
-const FormGroup = ({ blockId, id, fields, variant }) => {
+const FormGroup = ({ blockName, id, fields, variant }) => {
   const { dispatch } = useAppReducer();
 
   // TODO: Structure state in a way that only one form group gets rerendered
@@ -16,21 +16,12 @@ const FormGroup = ({ blockId, id, fields, variant }) => {
     dispatch({
       type: 'EDIT',
       payload: {
-        blockId,
+        blockName,
         groupId: id,
         data: { ...fields, [fieldName]: newFieldData },
       },
     });
   };
-
-  // const [data, setData] = useState(fields);
-  // const handleChange = (e) => {
-  //   e.preventDefault();
-
-  //   setData({ ...data, [fieldName]: newFieldData });
-
-  //   changeHandler({ id, data });
-  // };
 
   const inputFields = Object.entries(fields).map(
     ([name, { value, schema, error }]) => {
