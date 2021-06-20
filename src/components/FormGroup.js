@@ -3,8 +3,10 @@ import { useAppReducer } from '../context';
 
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 
-const FormGroup = ({ blockName, id, fields, variant, formGroupStyle }) => {
+const FormGroup = ({ blockName, id, fields, variant, formGroupSchema }) => {
   const { dispatch } = useAppReducer();
 
   // TODO: Structure state in a way that only one form group gets rerendered
@@ -20,6 +22,16 @@ const FormGroup = ({ blockName, id, fields, variant, formGroupStyle }) => {
         blockName,
         groupId: id,
         data: { ...fields, [fieldName]: newFieldData },
+      },
+    });
+  };
+
+  const handleDelete = () => {
+    dispatch({
+      type: 'DELETE',
+      payload: {
+        blockName,
+        groupId: id,
       },
     });
   };
@@ -56,9 +68,17 @@ const FormGroup = ({ blockName, id, fields, variant, formGroupStyle }) => {
   );
 
   return (
-    <Grid container {...formGroupStyle}>
-      {inputFields}
-    </Grid>
+    <Box mb={3}>
+      <Grid container {...formGroupSchema.muiStyle}>
+        {inputFields}
+      </Grid>
+
+      {!formGroupSchema.fixed && (
+        <Button variant="contained" color="secondary" onClick={handleDelete}>
+          Delete
+        </Button>
+      )}
+    </Box>
   );
 };
 

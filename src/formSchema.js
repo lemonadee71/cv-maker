@@ -7,6 +7,7 @@ const formSchema = [
     muiStyle: {
       spacing: 1,
     },
+    fixed: true,
     fields: [
       {
         name: 'firstName',

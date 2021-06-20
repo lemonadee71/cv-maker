@@ -21,7 +21,7 @@ const convertFormBlockSchema = (schema) => {
 
     obj[block.name] = { id };
     obj[block.name].groups = [convertFormGroupSchema(block.fields)];
-    obj[block.name].schema = { ...block, fields: undefined };
+    obj[block.name].schema = block;
   });
 
   return obj;
@@ -32,7 +32,10 @@ const capitalizeEach = (type, str) => {
 
   return str
     .split(separator)
-    .map((str) => str && str[0].toUpperCase() + str.substr(1, str.length))
+    .map(
+      (str) =>
+        str && str[0].toUpperCase() + str.substr(1, str.length).toLowerCase()
+    )
     .join(separator);
 };
 

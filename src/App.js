@@ -38,7 +38,7 @@ const App = () => {
 
   const validate = (e) => {
     e.preventDefault();
-    alert('Hello');
+    // TODO: Add validation
   };
 
   return (

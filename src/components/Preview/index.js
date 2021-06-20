@@ -31,7 +31,6 @@ const Preview = ({ data }) => {
         <View style={styles.section}></View>
         <View style={styles.section}>
           <Text>Section #2</Text>
-          <PersonIcon />
         </View>
       </Page>
     </Document>

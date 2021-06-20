@@ -1,19 +1,30 @@
-const appContextReducer = (state, action) => {
-  switch (action.type) {
-    // case 'ADD':
-    //   return {
-    //     ...state,
-    //     [key]: [...state[key], convertSchema(action.payload.schema)],
-    //   };
-    // case 'DELETE':
-    //   return {
-    //     ...state,
-    //     [key]: state[key].filter((child) => child.id !== action.payload.id),
-    //   };
-    case 'EDIT':
-      const { blockName, groupId, data } = action.payload;
-      const block = state[blockName];
+import { convertFormGroupSchema } from '../utils';
 
+const appContextReducer = (state, action) => {
+  const { blockName, groupId, data } = action.payload;
+  const block = state[blockName];
+
+  switch (action.type) {
+    case 'ADD':
+      return {
+        ...state,
+        [blockName]: {
+          ...block,
+          groups: [
+            ...block.groups,
+            convertFormGroupSchema(block.schema.fields),
+          ],
+        },
+      };
+    case 'DELETE':
+      return {
+        ...state,
+        [blockName]: {
+          ...block,
+          groups: block.groups.filter((group) => group.id !== groupId),
+        },
+      };
+    case 'EDIT':
       return {
         ...state,
         [blockName]: {
