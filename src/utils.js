@@ -28,7 +28,6 @@ const convertFormBlockSchema = (schema) => {
 };
 
 const capitalizeEach = (type, str) => {
-  console.log(str);
   const separator = type === 'word' ? ' ' : '.';
 
   return str

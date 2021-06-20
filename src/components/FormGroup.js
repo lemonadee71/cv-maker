@@ -30,7 +30,6 @@ const FormGroup = ({ blockName, id, fields, variant, formGroupStyle }) => {
         value,
         error,
         variant,
-        key: name,
         className: 'form-block__field',
         inputProps: { 'data-fieldname': name },
         InputLabelProps: schema.type === 'date' ? { shrink: true } : null,
@@ -49,7 +48,7 @@ const FormGroup = ({ blockName, id, fields, variant, formGroupStyle }) => {
       }
 
       return (
-        <Grid item {...schema.muiStyle}>
+        <Grid key={name} item {...schema.muiStyle}>
           <TextField {...props} onChange={handleChange} />
         </Grid>
       );
@@ -57,11 +56,9 @@ const FormGroup = ({ blockName, id, fields, variant, formGroupStyle }) => {
   );
 
   return (
-    <form>
-      <Grid container {...formGroupStyle}>
-        {inputFields}
-      </Grid>
-    </form>
+    <Grid container {...formGroupStyle}>
+      {inputFields}
+    </Grid>
   );
 };
 

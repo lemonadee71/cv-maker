@@ -1,10 +1,11 @@
 import React from 'react';
 import FormGroup from './FormGroup';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 const FormBlock = ({ blockName, groups, schema, variant }) => {
   return (
-    <div>
+    <Box mb={5}>
       <Typography variant="h4" gutterBottom>
         {schema.displayName}
       </Typography>
@@ -19,7 +20,7 @@ const FormBlock = ({ blockName, groups, schema, variant }) => {
           variant={variant}
         />
       ))}
-    </div>
+    </Box>
   );
 };
 

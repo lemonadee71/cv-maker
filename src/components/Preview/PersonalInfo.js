@@ -1,6 +1,14 @@
 import React from 'react';
-import Chip from '@material-ui/core/Chip';
 import { capitalizeEach } from '../../utils';
+import Chip from '@material-ui/core/Chip';
+import { Text, View, StyleSheet } from '@react-pdf/renderer';
+
+const styles = StyleSheet.create({
+  name: {
+    fontSize: 20,
+    marginBottom: 30,
+  },
+});
 
 const PersonalInfo = ({ data }) => {
   const {
@@ -15,31 +23,29 @@ const PersonalInfo = ({ data }) => {
   } = data.fields;
 
   return (
-    <>
-      <h3>
+    <View>
+      <Text style={styles.name}>
         {capitalizeEach(
           'word',
           `${firstName.value} ${middleInitial.value}${
             middleInitial.value ? '.' : ''
           } ${lastName.value}`
         )}
-      </h3>
-      <p>
-        <span>{email.value}</span>
-        <span>{phone.value}</span>
-        <span>{address.value}</span>
-      </p>
-      <p>Details</p>
-      <p>{capitalizeEach('sentence', details.value)}</p>
-      <p>Skills</p>
-      <div>
+      </Text>
+      <Text>{email.value}</Text>
+      <Text>{phone.value}</Text>
+      <Text>{address.value}</Text>
+      <Text>Details</Text>
+      <Text>{capitalizeEach('sentence', details.value)}</Text>
+      {/* <Text>Skills</Text>
+      <View>
         {skills.value
           .split(',')
           .map(
             (skill) => skill && <Chip label={skill.trim()} variant="outlined" />
           )}
-      </div>
-    </>
+      </View> */}
+    </View>
   );
 };
 
