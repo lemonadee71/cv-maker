@@ -1,12 +1,230 @@
+const formSchema = {
+  personal: {
+    displayName: 'Personal Information',
+    muiStyle: {
+      variant: 'outlined',
+    },
+    fields: {
+      firstName: {
+        type: 'text',
+        displayName: 'First name',
+        required: true,
+        autocomplete: true,
+        muiStyle: {
+          span: {
+            xs: 7,
+            sm: 4,
+            md: 5,
+          },
+        },
+      },
+      lastName: {
+        type: 'text',
+        displayName: 'Last name',
+        required: true,
+        autocomplete: true,
+        muiStyle: {
+          span: {
+            xs: 12,
+            sm: 4,
+            md: 5,
+          },
+        },
+      },
+      address: {
+        type: 'text',
+        displayName: 'Address',
+        required: true,
+        muiStyle: {
+          span: {
+            xs: 12,
+          },
+        },
+      },
+      phone: {
+        type: 'text',
+        displayName: 'Phone number',
+        required: true,
+        muiStyle: {
+          span: {
+            xs: 12,
+            sm: 6,
+          },
+        },
+      },
+      email: {
+        type: 'email',
+        displayName: 'Email',
+        required: true,
+        autocomplete: true,
+        muiStyle: {
+          span: {
+            xs: 12,
+            sm: 6,
+          },
+        },
+      },
+      details: {
+        type: 'multiline',
+        displayName: 'Details',
+        muiStyle: {
+          span: {
+            rows: 5,
+            xs: 12,
+          },
+        },
+      },
+      skills: {
+        type: 'multiline',
+        displayName: 'Skills',
+        helperText: 'Separate different skills with comma',
+        muiStyle: {
+          rows: 3,
+          span: {
+            xs: 12,
+          },
+        },
+      },
+    },
+  },
+  experience: {
+    displayName: 'Experience',
+    muiStyle: {
+      variant: 'outlined',
+    },
+    multiple: true,
+    fields: {
+      position: {
+        type: 'text',
+        displayName: 'Position',
+        autocomplete: true,
+        muiStyle: {
+          span: {
+            xs: 12,
+            sm: 6,
+          },
+        },
+      },
+      company: {
+        type: 'text',
+        displayName: 'Company',
+        autocomplete: true,
+        muiStyle: {
+          span: {
+            xs: 12,
+            sm: 6,
+          },
+        },
+      },
+      address: {
+        type: 'text',
+        displayName: 'Address',
+        autocomplete: true,
+        muiStyle: {
+          span: {
+            xs: 12,
+          },
+        },
+      },
+      startDate: {
+        type: 'date',
+        displayName: 'From',
+        muiStyle: {
+          span: {
+            xs: 12,
+            sm: 6,
+          },
+        },
+      },
+      endDate: {
+        type: 'date',
+        displayName: 'To',
+        helperText: 'Leave this out if still working at present',
+        muiStyle: {
+          span: {
+            xs: 12,
+            sm: 6,
+          },
+        },
+      },
+      description: {
+        type: 'multiline',
+        displayName: 'Job description',
+        muiStyle: {
+          rows: 5,
+          span: {
+            xs: 12,
+          },
+        },
+      },
+    },
+  },
+  education: {
+    displayName: 'Education',
+    muiStyle: {
+      variant: 'outlined',
+    },
+    multiple: true,
+    fields: {
+      school: {
+        type: 'text',
+        displayName: 'School',
+        autocomplete: true,
+        muiStyle: {
+          span: {
+            xs: 12,
+          },
+        },
+      },
+      address: {
+        type: 'text',
+        displayName: 'Address',
+        muiStyle: {
+          span: {
+            xs: 12,
+          },
+        },
+      },
+      degree: {
+        type: 'text',
+        displayName: 'Degree',
+        autocomplete: true,
+        muiStyle: {
+          span: {
+            xs: 12,
+          },
+        },
+      },
+      startDate: {
+        type: 'date',
+        displayName: 'From',
+        muiStyle: {
+          span: {
+            xs: 12,
+            sm: 6,
+          },
+        },
+      },
+      endDate: {
+        type: 'date',
+        displayName: 'To',
+        muiStyle: {
+          span: {
+            xs: 12,
+            sm: 6,
+          },
+        },
+      },
+    },
+  },
+};
+
 // name === id for our purposes
-const formSchema = [
+const formSchemaV1 = [
   {
     name: 'personal',
     displayName: 'Personal Information',
     variant: 'outlined',
-    muiStyle: {
-      spacing: 1,
-    },
     fixed: true,
     fields: [
       {
@@ -99,9 +317,6 @@ const formSchema = [
     name: 'experience',
     displayName: 'Experience',
     variant: 'outlined',
-    muiStyle: {
-      spacing: 2,
-    },
     fields: [
       {
         name: 'position',
@@ -137,7 +352,8 @@ const formSchema = [
         displayName: 'From',
         type: 'date',
         muiStyle: {
-          xs: 6,
+          xs: 12,
+          sm: 6,
         },
       },
       {
@@ -146,7 +362,8 @@ const formSchema = [
         type: 'date',
         helperText: 'Leave this out if still working at present',
         muiStyle: {
-          xs: 6,
+          xs: 12,
+          sm: 6,
         },
       },
       {
@@ -164,10 +381,6 @@ const formSchema = [
     name: 'education',
     displayName: 'Education',
     variant: 'outlined',
-    muiStyle: {
-      spacing: 2,
-    },
-
     fields: [
       {
         name: 'university',
@@ -200,7 +413,8 @@ const formSchema = [
         displayName: 'From',
         type: 'date',
         muiStyle: {
-          xs: 6,
+          xs: 12,
+          sm: 6,
         },
       },
       {
@@ -208,7 +422,8 @@ const formSchema = [
         displayName: 'To',
         type: 'date',
         muiStyle: {
-          xs: 6,
+          xs: 12,
+          sm: 6,
         },
       },
     ],
