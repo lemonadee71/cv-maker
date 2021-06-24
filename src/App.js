@@ -1,40 +1,48 @@
-import React, { useReducer, useMemo, useState } from 'react';
-import { appContextReducer } from './reducers/AppReducer';
-import { AppProvider } from './context';
-import { convertFormBlockSchema } from './utils';
+import React, { useState, useReducer, useMemo } from 'react';
+import { FormProvider } from './context';
 import formSchema from './formSchema';
+import { convertFormBlockSchema } from './utils';
+import { useForm } from './useForm';
 
+import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
-import Switch from '@material-ui/core/Switch';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Box from '@material-ui/core/Box';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { PDFViewer } from '@react-pdf/renderer';
 import FormBlock from './components/FormBlock';
 import Preview from './components/Preview';
+import { formContextReducer } from './reducers/formReducer';
+
+const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+});
+
+const lightTheme = createMuiTheme({
+  palette: {
+    type: 'light',
+  },
+});
 
 const App = () => {
-  const [darkTheme, setDarkTheme] = useState(true);
+  const isDarkModeEnabled = useMediaQuery('(prefers-color-scheme: dark)');
   const [showPreview, setShowPreview] = useState(false);
+
   const [state, dispatch] = useReducer(
-    appContextReducer,
+    formContextReducer,
     convertFormBlockSchema(formSchema)
   );
+  const formContextValue = useMemo(
+    () => ({ state, dispatch }),
+    [state, dispatch]
+  );
 
-  const contextValue = useMemo(() => ({ state, dispatch }), [state, dispatch]);
-
-  const theme = createMuiTheme({
-    palette: {
-      type: darkTheme ? 'dark' : 'light',
-    },
-  });
-
-  const toggleDarkTheme = () => {
-    setDarkTheme(!darkTheme);
-  };
+  // const formContextValue = useForm(formSchema);
+  // const { state } = formContextValue;
 
   const validate = (e) => {
     e.preventDefault();
@@ -54,19 +62,8 @@ const App = () => {
         justifyContent="space-between"
       >
         <h1 className="header__title">CV Maker</h1>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={darkTheme}
-              onChange={toggleDarkTheme}
-              name="darkThemeSwitch"
-              color="primary"
-            />
-          }
-          label="Dark mode"
-        />
       </Box>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={isDarkModeEnabled ? darkTheme : lightTheme}>
         <CssBaseline />
         <Box display="flex" justifyContent="center" mb={3}>
           <ButtonGroup
@@ -88,32 +85,30 @@ const App = () => {
             </Button>
           </ButtonGroup>
         </Box>
-        <AppProvider value={contextValue}>
-          <Container maxWidth={showPreview ? 'lg' : 'md'}>
-            {showPreview ? (
-              <PDFViewer height="800" width="100%">
-                <Preview data={state} />
-              </PDFViewer>
-            ) : (
-              <form onSubmit={validate}>
-                {Object.entries(state).map(([name, { id, groups, schema }]) => (
-                  <FormBlock
-                    key={id}
-                    blockName={name}
-                    groups={groups}
-                    schema={schema}
-                    variant={schema.variant}
-                  />
-                ))}
-                <Box display="flex" justifyContent="center" mb={3}>
-                  <Button variant="contained" color="primary" type="submit">
-                    Submit
-                  </Button>
-                </Box>
-              </form>
-            )}
-          </Container>
-        </AppProvider>
+        <Container maxWidth={'md'}>
+          {showPreview ? (
+            <pre>{JSON.stringify(state, null, 2)}</pre>
+          ) : (
+            // <PDFViewer height="800" width="100%">
+            //   <Preview data={state} />
+            // </PDFViewer>
+            <>
+              <FormProvider value={formContextValue}>
+                <form onSubmit={validate}>
+                  {Object.entries(formSchema).map(([name, schema]) => (
+                    <FormBlock key={name} blockName={name} schema={schema} />
+                  ))}
+                  <Box display="flex" justifyContent="center" mb={3}>
+                    <Button variant="contained" color="primary" type="submit">
+                      Submit
+                    </Button>
+                  </Box>
+                </form>
+              </FormProvider>
+              <pre>{JSON.stringify(state, null, 2)}</pre>
+            </>
+          )}
+        </Container>
       </ThemeProvider>
     </>
   );

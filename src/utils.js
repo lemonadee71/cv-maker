@@ -10,14 +10,18 @@ const convertFormGroupSchema = (fields) => {
       errorMsg: '',
     };
   });
+
+  return obj;
 };
 
 const convertFormBlockSchema = (schema) => {
   const obj = {};
 
-  Object.entries(schema).forEach(([name, schema]) => {
-    obj[name] = { groups: [convertFormGroupSchema(schema.fields)] };
+  Object.keys(schema).forEach((name) => {
+    obj[name] = [];
   });
+
+  return obj;
 };
 
 const capitalizeEach = (type, str) => {

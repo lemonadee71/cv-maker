@@ -28,7 +28,9 @@ const Preview = ({ data }) => {
   return (
     <Document className="preview">
       <Page size="A4" style={styles.page}>
-        <View style={styles.section}></View>
+        <View style={styles.section}>
+          <PersonalInfo data={data.personal.groups[0]} />
+        </View>
         <View style={styles.section}>
           <Text>Section #2</Text>
         </View>

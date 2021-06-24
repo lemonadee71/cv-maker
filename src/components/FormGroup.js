@@ -1,29 +1,38 @@
-import React from 'react';
-import { useAppReducer } from '../context';
+import React, { useState } from 'react';
+import { useFormReducer } from '../context';
+import { convertFormGroupSchema } from '../utils';
+import formSchema from '../formSchema';
 
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import PhoneField from 'material-ui-phone-number';
 
-const FormGroup = ({ blockName, id, fields, variant, formGroupSchema }) => {
-  const { dispatch } = useAppReducer();
+const FormGroup = ({ id, blockName, blockStyle, fields, multiple }) => {
+  const [data, setData] = useState(convertFormGroupSchema(fields).fields);
+  const { dispatch } = useFormReducer();
+
+  const dispatchChanges = (fieldName, newData) => {
+    setData({ ...data, [fieldName]: newData });
+
+    dispatch({
+      type: 'UPDATE',
+      payload: {
+        blockName,
+        groupId: id,
+        data: { ...data, [fieldName]: newData },
+      },
+    });
+  };
 
   // TODO: Structure state in a way that only one form group gets rerendered
   const handleChange = (e) => {
     e.preventDefault();
     const fieldName = e.target.getAttribute('data-fieldname');
-    const fieldData = fields[fieldName];
-    const newFieldData = { ...fieldData, value: e.target.value };
+    const newFieldData = { ...data[fieldName], value: e.target.value };
 
-    dispatch({
-      type: 'EDIT',
-      payload: {
-        blockName,
-        groupId: id,
-        data: { ...fields, [fieldName]: newFieldData },
-      },
-    });
+    dispatchChanges(fieldName, newFieldData);
   };
 
   const handleDelete = () => {
@@ -36,23 +45,24 @@ const FormGroup = ({ blockName, id, fields, variant, formGroupSchema }) => {
     });
   };
 
-  const inputFields = Object.entries(fields).map(
-    ([name, { value, schema, error }]) => {
+  const inputFields = Object.entries(formSchema[blockName].fields).map(
+    ([name, schema]) => {
       const props = {
-        value,
-        error,
-        variant,
-        className: 'form-block__field',
-        inputProps: { 'data-fieldname': name },
-        InputLabelProps: schema.type === 'date' ? { shrink: true } : null,
-        type: schema.type !== 'multiline' ? schema.type : 'text',
         label: schema.displayName,
         defaultValue: schema.defaultValue,
-        helperText: schema.helperText || '',
-        fullWidth: schema.fullWidth || true,
+        value: data[name].value,
+        error: data[name].error,
+        helperText: data[name].errorMsg || schema.helperText || '',
+        inputProps: { 'data-fieldname': name },
+        InputLabelProps: schema.type === 'date' ? { shrink: true } : null,
+        type: ['multiline', 'phone'].includes(schema.type)
+          ? 'text'
+          : schema.type,
+        variant: blockStyle.variant,
+        rows: schema.muiStyle.rows,
+        fullWidth: schema.muiStyle.fullWidth || true,
         required: schema.required,
         autoComplete: schema.autoComplete,
-        rows: schema.rows,
       };
 
       if (schema.type === 'multiline') {
@@ -60,8 +70,16 @@ const FormGroup = ({ blockName, id, fields, variant, formGroupSchema }) => {
       }
 
       return (
-        <Grid key={name} item {...schema.muiStyle}>
-          <TextField {...props} onChange={handleChange} />
+        <Grid key={name} item {...schema.muiStyle.span}>
+          {schema.type === 'phone' ? (
+            <PhoneField
+              {...props}
+              defaultCountry={'ph'}
+              onChange={handleChange}
+            />
+          ) : (
+            <TextField {...props} onChange={handleChange} />
+          )}
         </Grid>
       );
     }
@@ -69,11 +87,11 @@ const FormGroup = ({ blockName, id, fields, variant, formGroupSchema }) => {
 
   return (
     <Box mb={3}>
-      <Grid container {...formGroupSchema.muiStyle}>
+      <Grid container spacing={1}>
         {inputFields}
       </Grid>
 
-      {!formGroupSchema.fixed && (
+      {multiple && (
         <Button variant="contained" color="secondary" onClick={handleDelete}>
           Delete
         </Button>

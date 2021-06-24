@@ -42,7 +42,7 @@ const formSchema = {
         },
       },
       phone: {
-        type: 'text',
+        type: 'phoneNumber',
         displayName: 'Phone number',
         required: true,
         muiStyle: {

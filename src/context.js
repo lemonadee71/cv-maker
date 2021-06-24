@@ -1,14 +1,14 @@
 import { createContext, useContext } from 'react';
 
-const AppContext = createContext(null);
-const AppProvider = AppContext.Provider;
+const FormContext = createContext(null);
+const FormProvider = FormContext.Provider;
 
-const useAppReducer = () => {
-  const context = useContext(AppContext);
+const useFormReducer = () => {
+  const context = useContext(FormContext);
   if (context === undefined) {
-    throw new Error('useAppReducer must be used within a AppProvider');
+    throw new Error('useFormReducer must be used within a FormProvider');
   }
   return context;
 };
 
-export { AppProvider, useAppReducer };
+export { FormProvider, useFormReducer };
