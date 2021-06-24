@@ -17,7 +17,7 @@ const convertFormGroupSchema = (fields) => {
 const convertFormBlockSchema = (schema) => {
   const obj = {};
 
-  Object.keys(schema).forEach((name) => {
+  Object.entries(schema).forEach(([name, schema]) => {
     obj[name] = [];
   });
 

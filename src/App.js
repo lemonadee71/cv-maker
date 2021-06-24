@@ -2,7 +2,6 @@ import React, { useState, useReducer, useMemo } from 'react';
 import { FormProvider } from './context';
 import formSchema from './formSchema';
 import { convertFormBlockSchema } from './utils';
-import { useForm } from './useForm';
 
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
@@ -32,22 +31,12 @@ const App = () => {
   const isDarkModeEnabled = useMediaQuery('(prefers-color-scheme: dark)');
   const [showPreview, setShowPreview] = useState(false);
 
-  const [state, dispatch] = useReducer(
-    formContextReducer,
-    convertFormBlockSchema(formSchema)
-  );
-  const formContextValue = useMemo(
-    () => ({ state, dispatch }),
-    [state, dispatch]
-  );
-
-  // const formContextValue = useForm(formSchema);
-  // const { state } = formContextValue;
-
   const validate = (e) => {
     e.preventDefault();
     // TODO: Add validation
   };
+
+  console.log('Rendered app');
 
   return (
     <>
@@ -86,14 +75,17 @@ const App = () => {
           </ButtonGroup>
         </Box>
         <Container maxWidth={'md'}>
+          {/* <PDFViewer height="800" width="100%">
+              <Preview data={state} />
+            </PDFViewer> */}
           {showPreview ? (
-            <pre>{JSON.stringify(state, null, 2)}</pre>
+            <FormProvider>
+              <Preview />
+            </FormProvider>
           ) : (
-            // <PDFViewer height="800" width="100%">
-            //   <Preview data={state} />
-            // </PDFViewer>
             <>
-              <FormProvider value={formContextValue}>
+              <FormProvider>
+                <Preview />
                 <form onSubmit={validate}>
                   {Object.entries(formSchema).map(([name, schema]) => (
                     <FormBlock key={name} blockName={name} schema={schema} />
@@ -105,7 +97,6 @@ const App = () => {
                   </Box>
                 </form>
               </FormProvider>
-              <pre>{JSON.stringify(state, null, 2)}</pre>
             </>
           )}
         </Container>

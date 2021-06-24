@@ -9,7 +9,14 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import PhoneField from 'material-ui-phone-number';
 
-const FormGroup = ({ id, blockName, blockStyle, fields, multiple }) => {
+const FormGroup = ({
+  id,
+  blockName,
+  blockStyle,
+  fields,
+  multiple,
+  deleteHandler,
+}) => {
   const [data, setData] = useState(convertFormGroupSchema(fields).fields);
   const { dispatch } = useFormReducer();
 
@@ -19,9 +26,9 @@ const FormGroup = ({ id, blockName, blockStyle, fields, multiple }) => {
     dispatch({
       type: 'UPDATE',
       payload: {
+        data,
         blockName,
         groupId: id,
-        data: { ...data, [fieldName]: newData },
       },
     });
   };
@@ -35,15 +42,8 @@ const FormGroup = ({ id, blockName, blockStyle, fields, multiple }) => {
     dispatchChanges(fieldName, newFieldData);
   };
 
-  const handleDelete = () => {
-    dispatch({
-      type: 'DELETE',
-      payload: {
-        blockName,
-        groupId: id,
-      },
-    });
-  };
+  const handlePhoneNumberChange = (value) =>
+    dispatchChanges('phone', { ...data.phone, value });
 
   const inputFields = Object.entries(formSchema[blockName].fields).map(
     ([name, schema]) => {
@@ -55,7 +55,7 @@ const FormGroup = ({ id, blockName, blockStyle, fields, multiple }) => {
         helperText: data[name].errorMsg || schema.helperText || '',
         inputProps: { 'data-fieldname': name },
         InputLabelProps: schema.type === 'date' ? { shrink: true } : null,
-        type: ['multiline', 'phone'].includes(schema.type)
+        type: ['multiline', 'phoneNumber'].includes(schema.type)
           ? 'text'
           : schema.type,
         variant: blockStyle.variant,
@@ -71,11 +71,11 @@ const FormGroup = ({ id, blockName, blockStyle, fields, multiple }) => {
 
       return (
         <Grid key={name} item {...schema.muiStyle.span}>
-          {schema.type === 'phone' ? (
+          {schema.type === 'phoneNumber' ? (
             <PhoneField
               {...props}
               defaultCountry={'ph'}
-              onChange={handleChange}
+              onChange={handlePhoneNumberChange}
             />
           ) : (
             <TextField {...props} onChange={handleChange} />
@@ -92,7 +92,11 @@ const FormGroup = ({ id, blockName, blockStyle, fields, multiple }) => {
       </Grid>
 
       {multiple && (
-        <Button variant="contained" color="secondary" onClick={handleDelete}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => deleteHandler(id)}
+        >
           Delete
         </Button>
       )}
