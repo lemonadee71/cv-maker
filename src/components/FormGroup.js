@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import PhoneField from 'material-ui-phone-number';
 
+// TODO: Structure state in a way that only one form group gets rerendered
 const FormGroup = ({
   id,
   blockName,
@@ -18,28 +19,54 @@ const FormGroup = ({
 }) => {
   const { dispatch } = useFormReducer();
 
-  const dispatchChanges = (fieldName, newData) => {
+  const dispatchChanges = (fieldName, newFieldData) =>
     dispatch({
       type: 'UPDATE',
       payload: {
         blockName,
         groupId: id,
-        data: { ...data, [fieldName]: newData },
+        data: {
+          ...data,
+          [fieldName]: newFieldData,
+        },
       },
     });
+
+  const validateInput = (name, value) => {
+    const fieldSchema = fields[name];
+    const errorMsg =
+      fieldSchema.required && !value
+        ? 'This field is required'
+        : fieldSchema.validate && fieldSchema.validate(value);
+
+    return errorMsg;
   };
 
-  // TODO: Structure state in a way that only one form group gets rerendered
-  const handleChange = (e) => {
-    e.preventDefault();
-    const fieldName = e.target.getAttribute('data-fieldname');
-    const newFieldData = { ...data[fieldName], value: e.target.value };
+  const handleChange = (name, value) => {
+    const fieldData = data[name];
+    const isInvalid = fieldData.error;
+    const newData = { ...fieldData, value };
 
-    dispatchChanges(fieldName, newFieldData);
+    if (isInvalid) {
+      const errorMsg = validateInput(name, value);
+      newData.error = !!errorMsg;
+      newData.errorMsg = errorMsg;
+    }
+
+    dispatchChanges(name, newData);
   };
 
-  const handlePhoneNumberChange = (value) =>
-    dispatchChanges('phone', { ...data.phone, value });
+  const handleBlur = (name, value) => {
+    const errorMsg = validateInput(name, value);
+
+    const newData = {
+      value: value,
+      error: !!errorMsg,
+      errorMsg: errorMsg || '',
+    };
+
+    dispatchChanges(name, newData);
+  };
 
   const inputFields = Object.entries(fields).map(([name, schema]) => {
     const props = {
@@ -70,10 +97,25 @@ const FormGroup = ({
           <PhoneField
             {...props}
             defaultCountry={'ph'}
-            onChange={handlePhoneNumberChange}
+            onBlur={(value) => handleBlur('phone', value)}
+            onChange={(value) => handleChange('phone', value)}
           />
         ) : (
-          <TextField {...props} onChange={handleChange} />
+          <TextField
+            {...props}
+            onChange={(e) =>
+              handleChange(
+                e.target.getAttribute('data-fieldname'),
+                e.target.value
+              )
+            }
+            onBlur={(e) =>
+              handleBlur(
+                e.target.getAttribute('data-fieldname'),
+                e.target.value
+              )
+            }
+          />
         )}
       </Grid>
     );

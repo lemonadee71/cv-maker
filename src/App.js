@@ -31,7 +31,6 @@ const App = () => {
 
   const validate = (e) => {
     e.preventDefault();
-    // TODO: Add validation
   };
 
   console.log('Rendered app');

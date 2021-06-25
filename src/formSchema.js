@@ -12,22 +12,14 @@ const formSchema = {
         autocomplete: true,
         muiStyle: {
           span: {
-            xs: 7,
-            sm: 4,
-            md: 5,
+            xs: 12,
+            sm: 6,
           },
         },
-      },
-      middleInitial: {
-        type: 'text',
-        displayName: 'Middle initial',
-        autocomplete: true,
-        muiStyle: {
-          span: {
-            xs: 5,
-            sm: 4,
-            md: 2,
-          },
+        validate: (str) => {
+          if (str !== 'Shin') return 'You impostor';
+
+          return '';
         },
       },
       lastName: {
@@ -38,8 +30,7 @@ const formSchema = {
         muiStyle: {
           span: {
             xs: 12,
-            sm: 4,
-            md: 5,
+            sm: 6,
           },
         },
       },
@@ -80,8 +71,8 @@ const formSchema = {
         type: 'multiline',
         displayName: 'Details',
         muiStyle: {
+          rows: 5,
           span: {
-            rows: 5,
             xs: 12,
           },
         },
