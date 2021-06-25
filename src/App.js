@@ -1,7 +1,5 @@
-import React, { useState, useReducer, useMemo } from 'react';
-import { FormProvider } from './context';
+import React, { useState } from 'react';
 import formSchema from './formSchema';
-import { convertFormBlockSchema } from './utils';
 
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
@@ -11,9 +9,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { PDFViewer } from '@react-pdf/renderer';
-import FormBlock from './components/FormBlock';
 import Preview from './components/Preview';
-import { formContextReducer } from './reducers/formReducer';
+import CvForm from './components/CvForm';
+import { FormProvider } from './context';
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -54,7 +52,7 @@ const App = () => {
       </Box>
       <ThemeProvider theme={isDarkModeEnabled ? darkTheme : lightTheme}>
         <CssBaseline />
-        <Box display="flex" justifyContent="center" mb={3}>
+        {/* <Box display="flex" justifyContent="center" mb={3}>
           <ButtonGroup
             variant="contained"
             color="primary"
@@ -73,32 +71,12 @@ const App = () => {
               Preview
             </Button>
           </ButtonGroup>
-        </Box>
+        </Box> */}
         <Container maxWidth={'md'}>
-          {/* <PDFViewer height="800" width="100%">
-              <Preview data={state} />
-            </PDFViewer> */}
-          {showPreview ? (
-            <FormProvider>
-              <Preview />
-            </FormProvider>
-          ) : (
-            <>
-              <FormProvider>
-                <Preview />
-                <form onSubmit={validate}>
-                  {Object.entries(formSchema).map(([name, schema]) => (
-                    <FormBlock key={name} blockName={name} schema={schema} />
-                  ))}
-                  <Box display="flex" justifyContent="center" mb={3}>
-                    <Button variant="contained" color="primary" type="submit">
-                      Submit
-                    </Button>
-                  </Box>
-                </form>
-              </FormProvider>
-            </>
-          )}
+          <FormProvider>
+            <Preview />
+            <CvForm schema={formSchema} onSubmit={validate} />
+          </FormProvider>
         </Container>
       </ThemeProvider>
     </>

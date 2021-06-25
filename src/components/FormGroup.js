@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormReducer } from '../context';
-import { convertFormGroupSchema } from '../utils';
-import formSchema from '../formSchema';
 
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -14,21 +12,19 @@ const FormGroup = ({
   blockName,
   blockStyle,
   fields,
+  data,
   multiple,
   deleteHandler,
 }) => {
-  const [data, setData] = useState(convertFormGroupSchema(fields).fields);
   const { dispatch } = useFormReducer();
 
   const dispatchChanges = (fieldName, newData) => {
-    setData({ ...data, [fieldName]: newData });
-
     dispatch({
       type: 'UPDATE',
       payload: {
-        data,
         blockName,
         groupId: id,
+        data: { ...data, [fieldName]: newData },
       },
     });
   };
@@ -45,45 +41,43 @@ const FormGroup = ({
   const handlePhoneNumberChange = (value) =>
     dispatchChanges('phone', { ...data.phone, value });
 
-  const inputFields = Object.entries(formSchema[blockName].fields).map(
-    ([name, schema]) => {
-      const props = {
-        label: schema.displayName,
-        defaultValue: schema.defaultValue,
-        value: data[name].value,
-        error: data[name].error,
-        helperText: data[name].errorMsg || schema.helperText || '',
-        inputProps: { 'data-fieldname': name },
-        InputLabelProps: schema.type === 'date' ? { shrink: true } : null,
-        type: ['multiline', 'phoneNumber'].includes(schema.type)
-          ? 'text'
-          : schema.type,
-        variant: blockStyle.variant,
-        rows: schema.muiStyle.rows,
-        fullWidth: schema.muiStyle.fullWidth || true,
-        required: schema.required,
-        autoComplete: schema.autoComplete,
-      };
+  const inputFields = Object.entries(fields).map(([name, schema]) => {
+    const props = {
+      label: schema.displayName,
+      defaultValue: schema.defaultValue,
+      value: data[name].value,
+      error: data[name].error,
+      helperText: data[name].errorMsg || schema.helperText || '',
+      inputProps: { 'data-fieldname': name },
+      InputLabelProps: schema.type === 'date' ? { shrink: true } : null,
+      type: ['multiline', 'phoneNumber'].includes(schema.type)
+        ? 'text'
+        : schema.type,
+      variant: blockStyle.variant,
+      rows: schema.muiStyle.rows,
+      fullWidth: schema.muiStyle.fullWidth || true,
+      required: schema.required,
+      autoComplete: schema.autoComplete,
+    };
 
-      if (schema.type === 'multiline') {
-        props.multiline = true;
-      }
-
-      return (
-        <Grid key={name} item {...schema.muiStyle.span}>
-          {schema.type === 'phoneNumber' ? (
-            <PhoneField
-              {...props}
-              defaultCountry={'ph'}
-              onChange={handlePhoneNumberChange}
-            />
-          ) : (
-            <TextField {...props} onChange={handleChange} />
-          )}
-        </Grid>
-      );
+    if (schema.type === 'multiline') {
+      props.multiline = true;
     }
-  );
+
+    return (
+      <Grid key={id + name} item {...schema.muiStyle.span}>
+        {schema.type === 'phoneNumber' ? (
+          <PhoneField
+            {...props}
+            defaultCountry={'ph'}
+            onChange={handlePhoneNumberChange}
+          />
+        ) : (
+          <TextField {...props} onChange={handleChange} />
+        )}
+      </Grid>
+    );
+  });
 
   return (
     <Box mb={3}>

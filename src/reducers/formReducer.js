@@ -9,27 +9,33 @@ const formContextReducer = (state, action) => {
     case 'ADD':
       return {
         ...state,
-        [blockName]: [
+        [blockName]: {
           ...block,
-          {
-            ...convertFormGroupSchema(formSchema[blockName].fields),
-            id: groupId,
-          },
-        ],
+          groups: [
+            ...block.groups,
+            convertFormGroupSchema(formSchema[blockName].fields),
+          ],
+        },
       };
     case 'DELETE':
       return {
         ...state,
-        [blockName]: block.filter((group) => group.id !== groupId),
+        [blockName]: {
+          ...block,
+          groups: block.groups.filter((group) => group.id !== groupId),
+        },
       };
     case 'UPDATE':
       return {
         ...state,
-        [blockName]: block.map((group) => {
-          if (group.id === groupId) return { ...group, fields: data };
+        [blockName]: {
+          ...block,
+          groups: block.groups.map((group) => {
+            if (group.id === groupId) return { ...group, fields: data };
 
-          return group;
-        }),
+            return group;
+          }),
+        },
       };
     default:
       return state;

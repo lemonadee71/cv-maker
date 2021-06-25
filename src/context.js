@@ -1,4 +1,4 @@
-import { useMemo, useReducer, createContext, useContext } from 'react';
+import { createContext, useContext, useMemo, useReducer } from 'react';
 import formSchema from './formSchema';
 import { formContextReducer } from './reducers/formReducer';
 import { convertFormBlockSchema } from './utils';
@@ -21,7 +21,7 @@ const FormProvider = (props) => {
 
 const useFormReducer = () => {
   const context = useContext(FormContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useFormReducer must be used within a FormProvider');
   }
   return context;

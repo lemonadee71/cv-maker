@@ -18,7 +18,10 @@ const convertFormBlockSchema = (schema) => {
   const obj = {};
 
   Object.entries(schema).forEach(([name, schema]) => {
-    obj[name] = [];
+    obj[name] = {
+      id: uniqid(),
+      groups: [convertFormGroupSchema(schema.fields)],
+    };
   });
 
   return obj;
