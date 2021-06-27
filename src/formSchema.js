@@ -37,7 +37,6 @@ const formSchema = {
       address: {
         type: 'text',
         displayName: 'Address',
-        required: true,
         muiStyle: {
           span: {
             xs: 12,
@@ -45,7 +44,7 @@ const formSchema = {
         },
       },
       phone: {
-        type: 'phoneNumber',
+        type: 'phone',
         displayName: 'Phone number',
         required: true,
         muiStyle: {

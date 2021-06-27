@@ -7,7 +7,6 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import PhoneField from 'material-ui-phone-number';
 
-// TODO: Structure state in a way that only one form group gets rerendered
 const FormGroup = ({
   id,
   blockName,
@@ -77,9 +76,7 @@ const FormGroup = ({
       helperText: data[name].errorMsg || schema.helperText || '',
       inputProps: { 'data-fieldname': name },
       InputLabelProps: schema.type === 'date' ? { shrink: true } : null,
-      type: ['multiline', 'phoneNumber'].includes(schema.type)
-        ? 'text'
-        : schema.type,
+      type: ['multiline', 'phone'].includes(schema.type) ? 'text' : schema.type,
       variant: blockStyle.variant,
       rows: schema.muiStyle.rows,
       fullWidth: schema.muiStyle.fullWidth || true,
@@ -93,7 +90,7 @@ const FormGroup = ({
 
     return (
       <Grid key={id + name} item {...schema.muiStyle.span}>
-        {schema.type === 'phoneNumber' ? (
+        {schema.type === 'phone' ? (
           <PhoneField
             {...props}
             defaultCountry={'ph'}
@@ -123,7 +120,7 @@ const FormGroup = ({
 
   return (
     <Box mb={3}>
-      <Grid container spacing={1}>
+      <Grid container spacing={2}>
         {inputFields}
       </Grid>
 

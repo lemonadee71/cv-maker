@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import FormBlock from './FormBlock';
 
+// TODO: Structure state in a way that only one form group gets rerendered
 const CvForm = ({ schema, onSubmit }) => {
   const { data } = useFormReducer();
 
