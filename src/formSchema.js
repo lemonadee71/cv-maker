@@ -1,3 +1,8 @@
+const validateLength = (allowableLength) => (str) =>
+  str.length > allowableLength
+    ? `Must be less than ${allowableLength} characters`
+    : '';
+
 const formSchema = {
   personal: {
     displayName: 'Personal Information',
@@ -16,11 +21,6 @@ const formSchema = {
             sm: 6,
           },
         },
-        validate: (str) => {
-          if (str !== 'Shin') return 'You impostor';
-
-          return '';
-        },
       },
       lastName: {
         type: 'text',
@@ -37,6 +37,7 @@ const formSchema = {
       address: {
         type: 'text',
         displayName: 'Address',
+        autocomplete: true,
         muiStyle: {
           span: {
             xs: 12,
@@ -46,7 +47,6 @@ const formSchema = {
       phone: {
         type: 'phone',
         displayName: 'Phone number',
-        required: true,
         muiStyle: {
           span: {
             xs: 12,
@@ -75,6 +75,7 @@ const formSchema = {
             xs: 12,
           },
         },
+        validate: validateLength(500),
       },
       skills: {
         type: 'multiline',
@@ -158,6 +159,7 @@ const formSchema = {
             xs: 12,
           },
         },
+        validate: validateLength(500),
       },
     },
   },

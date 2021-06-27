@@ -72,7 +72,7 @@ const App = () => {
           </ButtonGroup>
         </Box> */}
         <Container maxWidth={'md'}>
-          <FormProvider>
+          <FormProvider schema={formSchema}>
             <Preview />
             <CvForm schema={formSchema} onSubmit={validate} />
           </FormProvider>

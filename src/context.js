@@ -1,14 +1,53 @@
 import { createContext, useContext, useMemo, useReducer } from 'react';
-import formSchema from './formSchema';
-import { formContextReducer } from './reducers/formReducer';
-import { convertFormBlockSchema } from './utils';
+import { convertFormBlockSchema, convertFormGroupSchema } from './utils';
+
+const formContextReducer = (schema) => (state, action) => {
+  const { blockName, groupId, data } = action.payload;
+  const block = state[blockName];
+
+  switch (action.type) {
+    case 'ADD':
+      return {
+        ...state,
+        [blockName]: {
+          ...block,
+          groups: [
+            ...block.groups,
+            convertFormGroupSchema(schema[blockName].fields),
+          ],
+        },
+      };
+    case 'DELETE':
+      return {
+        ...state,
+        [blockName]: {
+          ...block,
+          groups: block.groups.filter((group) => group.id !== groupId),
+        },
+      };
+    case 'UPDATE':
+      return {
+        ...state,
+        [blockName]: {
+          ...block,
+          groups: block.groups.map((group) => {
+            if (group.id === groupId) return { ...group, fields: data };
+
+            return group;
+          }),
+        },
+      };
+    default:
+      return state;
+  }
+};
 
 const FormContext = createContext(null);
 
 const FormProvider = (props) => {
   const [data, dispatch] = useReducer(
-    formContextReducer,
-    convertFormBlockSchema(formSchema)
+    formContextReducer(props.schema),
+    convertFormBlockSchema(props.schema)
   );
   const contextValue = useMemo(() => ({ data, dispatch }), [data, dispatch]);
 
