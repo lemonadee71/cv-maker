@@ -1,3 +1,6 @@
+const emailRegex =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
 const validateLength = (allowableLength) => (str) =>
   str.length > allowableLength
     ? `Must be less than ${allowableLength} characters`
@@ -65,6 +68,8 @@ const formSchema = {
             sm: 6,
           },
         },
+        validate: (str) =>
+          emailRegex.test(str) ? '' : 'Invalid email address',
       },
       details: {
         type: 'multiline',

@@ -34,7 +34,7 @@ const FormGroup = ({
   const validateInput = (name, value) => {
     const fieldSchema = fields[name];
     const errorMsg =
-      fieldSchema.required && !value
+      fieldSchema.required && !value.trim()
         ? 'This field is required'
         : fieldSchema.validate && fieldSchema.validate(value);
 
@@ -94,7 +94,7 @@ const FormGroup = ({
           <PhoneField
             {...props}
             defaultCountry={'ph'}
-            onBlur={(value) => handleBlur('phone', value)}
+            onBlur={(e) => handleBlur('phone', e.target.value)}
             onChange={(value) => handleChange('phone', value)}
           />
         ) : (

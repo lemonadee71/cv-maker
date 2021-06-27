@@ -10,23 +10,21 @@ const CvForm = ({ schema, onSubmit }) => {
   const { data } = useFormReducer();
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
-        {Object.entries(data).map(([name, { id, groups }]) => (
-          <FormBlock
-            key={id}
-            blockName={name}
-            schema={schema[name]}
-            data={groups}
-          />
-        ))}
-        <Box display="flex" justifyContent="center" mb={3}>
-          <Button variant="contained" color="primary" type="submit">
-            Submit
-          </Button>
-        </Box>
-      </form>
-    </>
+    <form onSubmit={onSubmit}>
+      {Object.entries(data).map(([name, { id, groups }]) => (
+        <FormBlock
+          key={id}
+          blockName={name}
+          schema={schema[name]}
+          data={groups}
+        />
+      ))}
+      <Box display="flex" justifyContent="center" mb={3}>
+        <Button variant="contained" color="primary" type="submit">
+          Submit
+        </Button>
+      </Box>
+    </form>
   );
 };
 

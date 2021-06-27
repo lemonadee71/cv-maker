@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useFormReducer } from '../context';
 
 import Typography from '@material-ui/core/Typography';
@@ -9,14 +9,14 @@ import FormGroup from './FormGroup';
 const FormBlock = ({ blockName, schema, data }) => {
   const { dispatch } = useFormReducer();
 
-  const handleAdd = useCallback(() => {
+  const handleAdd = () => {
     dispatch({
       type: 'ADD',
       payload: {
         blockName,
       },
     });
-  }, [blockName, dispatch]);
+  };
 
   const handleDelete = (id) => {
     dispatch({
