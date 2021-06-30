@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import useDebounce from '../hooks/useDebounce';
 import { useFormReducer } from '../context';
 
 import TextField from '@material-ui/core/TextField';
@@ -6,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import PhoneField from 'material-ui-phone-number';
-import { convertFormGroupSchema } from '../utils';
 
 const FormGroup = ({
   id,
@@ -17,26 +17,22 @@ const FormGroup = ({
   multiple,
   deleteHandler,
 }) => {
-  const [formData, setFormData] = useState(
-    convertFormGroupSchema(fields).fields
-  );
-  const [currentInput, setCurrentInput] = useState({});
-  const [timeoutFn, setTimeoutFn] = useState(null);
+  const [formData, setFormData] = useState(data);
+  const [debouncedCurrentData, setCurrentData] = useDebounce({}, 300);
   const { dispatch } = useFormReducer();
   // console.log('Rendered ' + blockName + id);
 
-  const dispatchChanges = (fieldName, newFieldData) =>
+  useEffect(() => {
+    console.log('---------------------');
     dispatch({
       type: 'UPDATE',
       payload: {
         blockName,
         groupId: id,
-        data: {
-          ...data,
-          [fieldName]: newFieldData,
-        },
+        data: debouncedCurrentData,
       },
     });
+  }, [debouncedCurrentData, id, blockName, dispatch]);
 
   const validateInput = (name, value) => {
     const fieldSchema = fields[name];
@@ -46,18 +42,6 @@ const FormGroup = ({
         : fieldSchema.validate && fieldSchema.validate(value);
 
     return errorMsg;
-  };
-
-  const debouncedDispatch = (name, newData) => {
-    clearTimeout(timeoutFn);
-    setCurrentInput({ name, newData });
-
-    setTimeoutFn(
-      setTimeout(() => {
-        console.log('dispatching changes', currentInput.newData);
-        dispatchChanges(currentInput.name, currentInput.newData);
-      }, 200)
-    );
   };
 
   const handleChange = (name, value) => {
@@ -73,7 +57,10 @@ const FormGroup = ({
     }
 
     setFormData((prevData) => ({ ...prevData, [name]: newData }));
-    debouncedDispatch(name, newData);
+    setCurrentData({
+      ...formData,
+      [name]: newData,
+    });
   };
 
   const handleBlur = (name, value) => {
@@ -86,8 +73,10 @@ const FormGroup = ({
     };
 
     setFormData((prevData) => ({ ...prevData, [name]: newData }));
-    setCurrentInput({ name, newData });
-    dispatchChanges(name, newData);
+    setCurrentData({
+      ...formData,
+      [name]: newData,
+    });
   };
 
   const inputFields = Object.entries(fields).map(([name, schema]) => {

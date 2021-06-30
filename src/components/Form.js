@@ -6,8 +6,6 @@ import FormBlock from './FormBlock';
 
 // TODO: Structure state in a way that only one form group gets rerendered
 const Form = ({ schema, onSubmit }) => {
-  console.log('Rendered form');
-
   return (
     <form onSubmit={onSubmit}>
       {Object.entries(schema).map(([name, blockSchema]) => (
