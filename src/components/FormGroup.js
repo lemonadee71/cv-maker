@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import useDebounce from '../hooks/useDebounce';
 import { useFormReducer } from '../context';
 
@@ -17,23 +17,21 @@ const FormGroup = ({
   multiple,
   deleteHandler,
 }) => {
-  console.log(blockName, data);
-  const [formData, setFormData] = useState(data);
-  const [debouncedCurrentData, setCurrentData] = useDebounce(data, 300);
+  const [debouncedFormData, formData, setFormData] = useDebounce(data, 300);
   const { dispatch } = useFormReducer();
   // console.log('Rendered ' + blockName + id);
 
   useEffect(() => {
-    console.log('---------------------');
+    console.log('dispatching changes');
     dispatch({
       type: 'UPDATE',
       payload: {
         blockName,
         groupId: id,
-        data: debouncedCurrentData,
+        data: debouncedFormData,
       },
     });
-  }, [debouncedCurrentData, id, blockName, dispatch]);
+  }, [debouncedFormData, id, blockName, dispatch]);
 
   const validateInput = (name, value) => {
     const fieldSchema = fields[name];
@@ -46,7 +44,6 @@ const FormGroup = ({
   };
 
   const handleChange = (name, value) => {
-    console.log('onchange event');
     const fieldData = formData[name];
     const isInvalid = fieldData.error;
     const newData = { ...fieldData, value };
@@ -58,10 +55,6 @@ const FormGroup = ({
     }
 
     setFormData((prevData) => ({ ...prevData, [name]: newData }));
-    setCurrentData({
-      ...formData,
-      [name]: newData,
-    });
   };
 
   const handleBlur = (name, value) => {
@@ -74,10 +67,6 @@ const FormGroup = ({
     };
 
     setFormData((prevData) => ({ ...prevData, [name]: newData }));
-    setCurrentData({
-      ...formData,
-      [name]: newData,
-    });
   };
 
   const inputFields = Object.entries(fields).map(([name, schema]) => {
