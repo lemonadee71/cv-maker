@@ -10,7 +10,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { PDFViewer } from '@react-pdf/renderer';
 import Preview from './components/Preview';
-import CvForm from './components/CvForm';
+import Form from './components/Form';
 import { FormProvider } from './context';
 
 const darkTheme = createMuiTheme({
@@ -74,7 +74,7 @@ const App = () => {
         <Container maxWidth={'md'}>
           <FormProvider schema={formSchema}>
             <Preview />
-            <CvForm schema={formSchema} onSubmit={validate} />
+            <Form schema={formSchema} onSubmit={validate} />
           </FormProvider>
         </Container>
       </ThemeProvider>

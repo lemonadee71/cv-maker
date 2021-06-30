@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormReducer } from '../context';
 
 import TextField from '@material-ui/core/TextField';
@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import PhoneField from 'material-ui-phone-number';
+import { convertFormGroupSchema } from '../utils';
 
 const FormGroup = ({
   id,
@@ -16,7 +17,13 @@ const FormGroup = ({
   multiple,
   deleteHandler,
 }) => {
+  const [formData, setFormData] = useState(
+    convertFormGroupSchema(fields).fields
+  );
+  const [currentInput, setCurrentInput] = useState({});
+  const [timeoutFn, setTimeoutFn] = useState(null);
   const { dispatch } = useFormReducer();
+  // console.log('Rendered ' + blockName + id);
 
   const dispatchChanges = (fieldName, newFieldData) =>
     dispatch({
@@ -41,8 +48,21 @@ const FormGroup = ({
     return errorMsg;
   };
 
+  const debouncedDispatch = (name, newData) => {
+    clearTimeout(timeoutFn);
+    setCurrentInput({ name, newData });
+
+    setTimeoutFn(
+      setTimeout(() => {
+        console.log('dispatching changes', currentInput.newData);
+        dispatchChanges(currentInput.name, currentInput.newData);
+      }, 200)
+    );
+  };
+
   const handleChange = (name, value) => {
-    const fieldData = data[name];
+    console.log('onchange event');
+    const fieldData = formData[name];
     const isInvalid = fieldData.error;
     const newData = { ...fieldData, value };
 
@@ -52,7 +72,8 @@ const FormGroup = ({
       newData.errorMsg = errorMsg;
     }
 
-    dispatchChanges(name, newData);
+    setFormData((prevData) => ({ ...prevData, [name]: newData }));
+    debouncedDispatch(name, newData);
   };
 
   const handleBlur = (name, value) => {
@@ -64,6 +85,8 @@ const FormGroup = ({
       errorMsg: errorMsg || '',
     };
 
+    setFormData((prevData) => ({ ...prevData, [name]: newData }));
+    setCurrentInput({ name, newData });
     dispatchChanges(name, newData);
   };
 
@@ -71,9 +94,9 @@ const FormGroup = ({
     const props = {
       label: schema.displayName,
       defaultValue: schema.defaultValue,
-      value: data[name].value,
-      error: data[name].error,
-      helperText: data[name].errorMsg || schema.helperText || '',
+      value: formData[name].value,
+      error: formData[name].error,
+      helperText: formData[name].errorMsg || schema.helperText || '',
       inputProps: { 'data-fieldname': name },
       InputLabelProps: schema.type === 'date' ? { shrink: true } : null,
       type: ['multiline', 'phone'].includes(schema.type) ? 'text' : schema.type,
@@ -89,7 +112,7 @@ const FormGroup = ({
     }
 
     return (
-      <Grid key={id + name} item {...schema.muiStyle.span}>
+      <Grid item key={id + name} {...schema.muiStyle.span}>
         {schema.type === 'phone' ? (
           <PhoneField
             {...props}

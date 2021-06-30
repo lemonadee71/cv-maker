@@ -6,8 +6,9 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import FormGroup from './FormGroup';
 
-const FormBlock = ({ blockName, schema, data }) => {
-  const { dispatch } = useFormReducer();
+const FormBlock = ({ blockName, schema }) => {
+  const { data, dispatch } = useFormReducer();
+  // console.log(`Rendered ${blockName}`);
 
   const handleAdd = () => {
     dispatch({
@@ -34,7 +35,7 @@ const FormBlock = ({ blockName, schema, data }) => {
         {schema.displayName}
       </Typography>
 
-      {data.map(({ id, fields }) => (
+      {data[blockName].groups.map(({ id, fields }) => (
         <FormGroup
           key={id}
           id={id}
