@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import useDebounce from '../hooks/useDebounce';
 import { useFormReducer } from '../context';
 
@@ -17,8 +17,9 @@ const FormGroup = ({
   multiple,
   deleteHandler,
 }) => {
+  console.log(blockName, data);
   const [formData, setFormData] = useState(data);
-  const [debouncedCurrentData, setCurrentData] = useDebounce({}, 300);
+  const [debouncedCurrentData, setCurrentData] = useDebounce(data, 300);
   const { dispatch } = useFormReducer();
   // console.log('Rendered ' + blockName + id);
 

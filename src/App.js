@@ -51,7 +51,7 @@ const App = () => {
       </Box>
       <ThemeProvider theme={isDarkModeEnabled ? darkTheme : lightTheme}>
         <CssBaseline />
-        {/* <Box display="flex" justifyContent="center" mb={3}>
+        <Box display="flex" justifyContent="center" mb={3}>
           <ButtonGroup
             variant="contained"
             color="primary"
@@ -70,11 +70,14 @@ const App = () => {
               Preview
             </Button>
           </ButtonGroup>
-        </Box> */}
+        </Box>
         <Container maxWidth={'md'}>
           <FormProvider schema={formSchema}>
-            <Preview />
-            <Form schema={formSchema} onSubmit={validate} />
+            {showPreview ? (
+              <Preview />
+            ) : (
+              <Form schema={formSchema} onSubmit={validate} />
+            )}
           </FormProvider>
         </Container>
       </ThemeProvider>

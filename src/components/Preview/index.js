@@ -29,7 +29,7 @@ const Preview = () => {
   const { data } = useFormReducer();
 
   return (
-    <pre>{JSON.stringify(data.personal, null, 2)}</pre>
+    <pre>{JSON.stringify(data, null, 2)}</pre>
     // <Document className="preview">
     //   <Page size="A4" style={styles.page}>
     //     <View style={styles.section}>
