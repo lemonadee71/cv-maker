@@ -1,26 +1,19 @@
 import React from 'react';
-import EducationSection from './Education';
-import ExperienceSection from './ExperienceSection';
-import PersonalInfo from './PersonalInfo';
 import {
   Page,
   Document,
   StyleSheet,
   View,
-  Text,
   PDFViewer,
 } from '@react-pdf/renderer';
 import { useFormReducer } from '../../context';
-import Header from './Header';
-import { globalStyles } from './styles';
+import data from '../../defaultData.json';
 
-// const styles = StyleSheet.create({
-//   body: {
-//     paddingTop: 35,
-//     paddingBottom: 65,
-//     paddingHorizontal: 35,
-//   },
-// });
+import Header from './Header';
+import Profile from './Profile';
+import Skills from './Skills';
+import EducationSection from './Education';
+import ExperienceSection from './Experience';
 
 const styles = StyleSheet.create({
   page: {
@@ -34,6 +27,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: '80%',
     border: '1px solid blue',
+    paddingVertical: 5,
   },
   leftColumn: {
     display: 'flex',
@@ -42,26 +36,29 @@ const styles = StyleSheet.create({
   },
   rightColumn: {
     display: 'flex',
-    width: '55%',
+    width: '65%',
     padding: 10,
     borderLeft: '1.5px solid gray',
   },
 });
 
 const Preview = () => {
-  const { data } = useFormReducer();
+  // const { data } = useFormReducer();
 
   return (
     <PDFViewer width="100%" height="700px">
       <Document className="preview">
         <Page size="A4" style={styles.page}>
-          <Header />
+          <Header data={data.personal} />
           <View style={styles.content}>
             <View style={styles.leftColumn}>
-              <EducationSection />
-              <EducationSection />
+              <EducationSection data={data.education} />
+              <Skills data={data.personal.skills} />
             </View>
-            <View style={styles.rightColumn}></View>
+            <View style={styles.rightColumn}>
+              <Profile data={data.personal.details} />
+              <ExperienceSection data={data.experience} />
+            </View>
           </View>
         </Page>
       </Document>

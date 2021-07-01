@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, View, StyleSheet } from '@react-pdf/renderer';
-import { globalStyles } from './styles';
+import { View, StyleSheet } from '@react-pdf/renderer';
+import { BodyText, Section, Subtitle, Title } from './styles';
 
 const styles = StyleSheet.create({
   entry: {
@@ -8,20 +8,21 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function EducationSection() {
+export default function EducationSection({ data }) {
   return (
-    <View style={globalStyles.section}>
-      <Text style={globalStyles.title}>Education</Text>
-      <View style={styles.entry}>
-        <Text style={globalStyles.subtitle}>New York University</Text>
-        <Text style={globalStyles.bodyText}>Master of Arts in Economics</Text>
-        <Text style={globalStyles.bodyText}>2010 - 2012</Text>
-      </View>
-      <View style={styles.entry}>
-        <Text style={globalStyles.subtitle}>New York University</Text>
-        <Text style={globalStyles.bodyText}>Master of Arts in Economics</Text>
-        <Text style={globalStyles.bodyText}>2010 - 2012</Text>
-      </View>
-    </View>
+    <Section>
+      <Title>Education</Title>
+      {data.map((entry) => (
+        <>
+          <View style={styles.entry}>
+            <Subtitle>{entry.school}</Subtitle>
+            <BodyText>{entry.degree}</BodyText>
+            <BodyText>
+              {entry.startDate} - {entry.endDate || 'Present'}
+            </BodyText>
+          </View>
+        </>
+      ))}
+    </Section>
   );
 }

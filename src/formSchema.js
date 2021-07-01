@@ -37,9 +37,10 @@ const formSchema = {
           },
         },
       },
-      address: {
+      title: {
         type: 'text',
-        displayName: 'Address',
+        displayName: 'Title',
+        required: true,
         autocomplete: true,
         muiStyle: {
           span: {
@@ -70,6 +71,16 @@ const formSchema = {
         },
         validate: (str) =>
           emailRegex.test(str) ? '' : 'Invalid email address',
+      },
+      address: {
+        type: 'text',
+        displayName: 'Address',
+        autocomplete: true,
+        muiStyle: {
+          span: {
+            xs: 12,
+          },
+        },
       },
       details: {
         type: 'multiline',
@@ -124,15 +135,16 @@ const formSchema = {
           },
         },
       },
-      address: {
-        type: 'text',
-        displayName: 'Address',
-        autocomplete: true,
+      description: {
+        type: 'multiline',
+        displayName: 'Job description',
         muiStyle: {
+          rows: 5,
           span: {
             xs: 12,
           },
         },
+        validate: validateLength(500),
       },
       startDate: {
         type: 'date',
@@ -155,17 +167,6 @@ const formSchema = {
           },
         },
       },
-      description: {
-        type: 'multiline',
-        displayName: 'Job description',
-        muiStyle: {
-          rows: 5,
-          span: {
-            xs: 12,
-          },
-        },
-        validate: validateLength(500),
-      },
     },
   },
   education: {
@@ -179,15 +180,6 @@ const formSchema = {
         type: 'text',
         displayName: 'School',
         autocomplete: true,
-        muiStyle: {
-          span: {
-            xs: 12,
-          },
-        },
-      },
-      address: {
-        type: 'text',
-        displayName: 'Address',
         muiStyle: {
           span: {
             xs: 12,
