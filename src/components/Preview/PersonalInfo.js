@@ -10,25 +10,15 @@ const styles = StyleSheet.create({
 });
 
 const PersonalInfo = ({ data }) => {
-  const {
-    firstName,
-    middleInitial,
-    lastName,
-    address,
-    phone,
-    email,
-    details,
-    skills,
-  } = data.fields;
+  const { firstName, lastName, address, phone, email, details, skills } =
+    data.fields;
 
   return (
     <View>
       <Text style={styles.name}>
         {capitalizeEach(
           'word',
-          `${firstName.value} ${middleInitial.value}${
-            middleInitial.value ? '.' : ''
-          } ${lastName.value}`
+          `${firstName.value || ''} ${lastName.value || ''}`
         )}
       </Text>
       <Text>{email.value}</Text>

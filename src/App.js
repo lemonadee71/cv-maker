@@ -5,10 +5,10 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { PDFViewer } from '@react-pdf/renderer';
 import Preview from './components/Preview';
 import Form from './components/Form';
 import { FormProvider } from './context';
@@ -27,28 +27,27 @@ const lightTheme = createMuiTheme({
 
 const App = () => {
   const isDarkModeEnabled = useMediaQuery('(prefers-color-scheme: dark)');
-  const [showPreview, setShowPreview] = useState(false);
+  const [showPreview, setShowPreview] = useState(true);
 
   const validate = (e) => {
     e.preventDefault();
   };
 
-  console.log('Rendered app');
-
   return (
     <>
-      <Box
-        component="header"
-        height="4rem"
-        width="90%"
-        my={1}
-        mx="auto"
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <h1 className="header__title">CV Maker</h1>
-      </Box>
+      <Paper square={true} elevation={3} component="header">
+        <Box
+          height="4rem"
+          width="90%"
+          mb={3}
+          mx="auto"
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <h1 className="header__title">CV Maker</h1>
+        </Box>
+      </Paper>
       <ThemeProvider theme={isDarkModeEnabled ? darkTheme : lightTheme}>
         <CssBaseline />
         <Box display="flex" justifyContent="center" mb={3}>

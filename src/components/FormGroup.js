@@ -19,10 +19,8 @@ const FormGroup = ({
 }) => {
   const [debouncedFormData, formData, setFormData] = useDebounce(data, 300);
   const { dispatch } = useFormReducer();
-  // console.log('Rendered ' + blockName + id);
 
   useEffect(() => {
-    console.log('dispatching changes');
     dispatch({
       type: 'UPDATE',
       payload: {

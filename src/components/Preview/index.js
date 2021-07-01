@@ -1,10 +1,18 @@
 import React from 'react';
-import EducationSection from './EducationSection';
+import EducationSection from './Education';
 import ExperienceSection from './ExperienceSection';
 import PersonalInfo from './PersonalInfo';
-import { Page, Document, StyleSheet, Text, View } from '@react-pdf/renderer';
-import { PersonIcon } from '../Icons';
+import {
+  Page,
+  Document,
+  StyleSheet,
+  View,
+  Text,
+  PDFViewer,
+} from '@react-pdf/renderer';
 import { useFormReducer } from '../../context';
+import Header from './Header';
+import { globalStyles } from './styles';
 
 // const styles = StyleSheet.create({
 //   body: {
@@ -16,12 +24,27 @@ import { useFormReducer } from '../../context';
 
 const styles = StyleSheet.create({
   page: {
-    flexDirection: 'row',
+    width: '100%',
+    margin: 30,
+    // fontFamily: 'Times-Roman',
   },
-  section: {
-    margin: 10,
+  content: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '90%',
+    height: '80%',
+    border: '1px solid blue',
+  },
+  leftColumn: {
+    display: 'flex',
+    width: '35%',
     padding: 10,
-    flexGrow: 1,
+  },
+  rightColumn: {
+    display: 'flex',
+    width: '55%',
+    padding: 10,
+    borderLeft: '1.5px solid gray',
   },
 });
 
@@ -29,17 +52,20 @@ const Preview = () => {
   const { data } = useFormReducer();
 
   return (
-    <pre>{JSON.stringify(data, null, 2)}</pre>
-    // <Document className="preview">
-    //   <Page size="A4" style={styles.page}>
-    //     <View style={styles.section}>
-    //       <PersonalInfo data={data.personal.groups[0]} />
-    //     </View>
-    //     <View style={styles.section}>
-    //       <Text>Section #2</Text>
-    //     </View>
-    //   </Page>
-    // </Document>
+    <PDFViewer width="100%" height="700px">
+      <Document className="preview">
+        <Page size="A4" style={styles.page}>
+          <Header />
+          <View style={styles.content}>
+            <View style={styles.leftColumn}>
+              <EducationSection />
+              <EducationSection />
+            </View>
+            <View style={styles.rightColumn}></View>
+          </View>
+        </Page>
+      </Document>
+    </PDFViewer>
   );
 };
 
