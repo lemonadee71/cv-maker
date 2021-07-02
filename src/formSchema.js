@@ -220,6 +220,47 @@ const formSchema = {
       },
     },
   },
+  training: {
+    displayName: 'Training / Certifications / Organization',
+    muiStyle: {
+      variant: 'outlined',
+    },
+    multiple: true,
+    defaultGroups: 0,
+    fields: {
+      name: {
+        type: 'text',
+        displayName: 'Name',
+        placeholder: 'Training / Certificate / Name of organization',
+        autocomplete: true,
+        muiStyle: {
+          span: {
+            xs: 12,
+          },
+        },
+      },
+      startDate: {
+        type: 'date',
+        displayName: 'From',
+        muiStyle: {
+          span: {
+            xs: 12,
+            sm: 6,
+          },
+        },
+      },
+      endDate: {
+        type: 'date',
+        displayName: 'To',
+        muiStyle: {
+          span: {
+            xs: 12,
+            sm: 6,
+          },
+        },
+      },
+    },
+  },
 };
 
 export default formSchema;
