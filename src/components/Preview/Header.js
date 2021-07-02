@@ -5,7 +5,6 @@ import { BodyText, Subtitle } from './styles';
 const styles = StyleSheet.create({
   header: {
     width: '90%',
-    border: '1px solid blue',
     marginBottom: 15,
   },
   nameAndTitle: {

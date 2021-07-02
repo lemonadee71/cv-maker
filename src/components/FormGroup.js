@@ -74,6 +74,7 @@ const FormGroup = ({
       value: formData[name].value,
       error: formData[name].error,
       helperText: formData[name].errorMsg || schema.helperText || '',
+      placeholder: schema.placeholder || '',
       inputProps: { 'data-fieldname': name },
       InputLabelProps: schema.type === 'date' ? { shrink: true } : null,
       type: ['multiline', 'phone'].includes(schema.type) ? 'text' : schema.type,
@@ -89,6 +90,7 @@ const FormGroup = ({
     }
 
     return (
+      // Assume that schema always has muiStyle
       <Grid item key={id + name} {...schema.muiStyle.span}>
         {schema.type === 'phone' ? (
           <PhoneField

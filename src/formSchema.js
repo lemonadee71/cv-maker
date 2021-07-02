@@ -40,17 +40,7 @@ const formSchema = {
       title: {
         type: 'text',
         displayName: 'Title',
-        required: true,
         autocomplete: true,
-        muiStyle: {
-          span: {
-            xs: 12,
-          },
-        },
-      },
-      phone: {
-        type: 'phone',
-        displayName: 'Phone number',
         muiStyle: {
           span: {
             xs: 12,
@@ -72,6 +62,16 @@ const formSchema = {
         validate: (str) =>
           emailRegex.test(str) ? '' : 'Invalid email address',
       },
+      phone: {
+        type: 'phone',
+        displayName: 'Phone number',
+        muiStyle: {
+          span: {
+            xs: 12,
+            sm: 6,
+          },
+        },
+      },
       address: {
         type: 'text',
         displayName: 'Address',
@@ -84,7 +84,8 @@ const formSchema = {
       },
       details: {
         type: 'multiline',
-        displayName: 'Details',
+        displayName: 'Profile',
+        placeholder: 'About yourself',
         muiStyle: {
           rows: 5,
           span: {
@@ -175,6 +176,7 @@ const formSchema = {
       variant: 'outlined',
     },
     multiple: true,
+    defaultGroups: 0,
     fields: {
       school: {
         type: 'text',

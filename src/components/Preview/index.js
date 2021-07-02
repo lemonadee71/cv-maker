@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '90%',
     height: '80%',
-    border: '1px solid blue',
     paddingVertical: 5,
   },
   leftColumn: {

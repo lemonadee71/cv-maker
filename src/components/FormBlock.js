@@ -31,7 +31,7 @@ const FormBlock = ({ blockName, schema }) => {
 
   return (
     <Box mb={5}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h5" gutterBottom>
         {schema.displayName}
       </Typography>
 
