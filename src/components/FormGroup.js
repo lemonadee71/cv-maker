@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import useDebounce from '../hooks/useDebounce';
+import { useDebounce } from '../hooks';
 import { useFormReducer } from '../context';
 
 import TextField from '@material-ui/core/TextField';

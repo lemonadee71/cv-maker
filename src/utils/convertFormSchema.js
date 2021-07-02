@@ -1,6 +1,6 @@
-const uniqid = () => Math.random().toString(36).substr(2, 5);
+import { uniqid } from './uniqid';
 
-const convertFormGroupSchema = (fields) => {
+export const convertFormGroupSchema = (fields) => {
   const obj = { id: uniqid(), fields: {} };
 
   Object.entries(fields).forEach(([name, schema]) => {
@@ -14,7 +14,7 @@ const convertFormGroupSchema = (fields) => {
   return obj;
 };
 
-const convertFormBlockSchema = (schema) => {
+export const convertFormBlockSchema = (schema) => {
   const obj = {};
 
   Object.entries(schema).forEach(([name, schema]) => {
@@ -27,23 +27,4 @@ const convertFormBlockSchema = (schema) => {
   });
 
   return obj;
-};
-
-const capitalizeEach = (type, str) => {
-  const separator = type === 'word' ? ' ' : '.';
-
-  return str
-    .split(separator)
-    .map(
-      (str) =>
-        str && str[0].toUpperCase() + str.substr(1, str.length).toLowerCase()
-    )
-    .join(separator);
-};
-
-export {
-  convertFormBlockSchema,
-  convertFormGroupSchema,
-  capitalizeEach,
-  uniqid,
 };

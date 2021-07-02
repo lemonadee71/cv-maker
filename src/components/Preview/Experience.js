@@ -7,7 +7,7 @@ export default function ExperienceSection({ data }) {
     <Section style={[{ borderBottom: 'none' }]}>
       <Title>Work Experience</Title>
       {data.map((entry, i) => (
-        <View style={{ marginBottom: i === data.length ? 0 : 20 }}>
+        <View key={i} style={{ marginBottom: i === data.length ? 0 : 20 }}>
           <Subtitle>{entry.position}</Subtitle>
           <BodyText style={[{ marginBottom: 5 }]}>
             {entry.company} / {entry.startDate} - {entry.endDate || 'Present'}

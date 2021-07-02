@@ -12,16 +12,14 @@ export default function EducationSection({ data }) {
   return (
     <Section>
       <Title>Education</Title>
-      {data.map((entry) => (
-        <>
-          <View style={styles.entry}>
-            <Subtitle>{entry.school}</Subtitle>
-            <BodyText>{entry.degree}</BodyText>
-            <BodyText>
-              {entry.startDate} - {entry.endDate || 'Present'}
-            </BodyText>
-          </View>
-        </>
+      {data.map((entry, i) => (
+        <View key={i} style={styles.entry}>
+          <Subtitle>{entry.school}</Subtitle>
+          <BodyText>{entry.degree}</BodyText>
+          <BodyText>
+            {entry.startDate} - {entry.endDate || 'Present'}
+          </BodyText>
+        </View>
       ))}
     </Section>
   );

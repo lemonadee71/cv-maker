@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useReducer } from 'react';
-import { convertFormBlockSchema, convertFormGroupSchema } from './utils';
+import { convertFormBlockSchema, convertFormGroupSchema } from './utils/index';
 
 const formContextReducer = (schema) => (state, action) => {
   const { blockName, groupId, data } = action.payload;

@@ -12,6 +12,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Preview from './components/Preview';
 import Form from './components/Form';
 import { FormProvider } from './context';
+import { reduceToValue } from './utils';
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -29,8 +30,8 @@ const App = () => {
   const isDarkModeEnabled = useMediaQuery('(prefers-color-scheme: dark)');
   const [showPreview, setShowPreview] = useState(true);
 
-  const validate = (e) => {
-    e.preventDefault();
+  const handleSubmit = (data) => {
+    console.log(JSON.stringify(reduceToValue(data), null, 2));
   };
 
   return (
@@ -75,7 +76,7 @@ const App = () => {
             {showPreview ? (
               <Preview />
             ) : (
-              <Form schema={formSchema} onSubmit={validate} />
+              <Form schema={formSchema} onSubmit={handleSubmit} />
             )}
           </FormProvider>
         </Container>
