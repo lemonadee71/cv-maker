@@ -6,7 +6,7 @@ export const reduceToValue = (data) => {
       const groupData = {};
 
       Object.entries(group.fields).forEach(([field, value]) => {
-        groupData[field] = value.value;
+        groupData[field] = value.value.trim() || '';
       });
 
       return groupData;

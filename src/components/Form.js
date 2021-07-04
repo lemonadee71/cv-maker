@@ -6,7 +6,7 @@ import FormBlock from './FormBlock';
 import { useFormReducer } from '../context';
 
 const Form = ({ schema, onSubmit }) => {
-  const { data } = useFormReducer();
+  const { data, dispatch } = useFormReducer();
 
   const validateInput = (value, fieldSchema) => {
     const errorMsg =
@@ -20,29 +20,41 @@ const Form = ({ schema, onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    Object.entries(data).forEach(([blockName, blockData]) => {
-      blockData.groups.map((group) => {
-        const newGroupData = {};
+    const newData = {};
 
-        Object.entries(group.fields).forEach(([fieldName, value]) => {
-          const errorMsg = validateInput(
-            value.value,
-            schema[blockName].fields[fieldName]
-          );
+    Object.entries(data).forEach(([blockName, data]) => {
+      newData[blockName] = {
+        ...data,
+        groups: data.groups.map((group) => {
+          const newGroupData = {};
 
-          newGroupData[fieldName] = {
-            ...value,
-            errorMsg: errorMsg || '',
-            error: !!errorMsg,
-          };
-        });
+          Object.entries(group.fields).forEach(([fieldName, value]) => {
+            const errorMsg = validateInput(
+              value.value,
+              schema[blockName].fields[fieldName]
+            );
 
-        return newGroupData;
-      });
+            newGroupData[fieldName] = {
+              ...value,
+              errorMsg: errorMsg || '',
+              error: !!errorMsg,
+            };
+          });
+
+          return { id: group.id, fields: newGroupData };
+        }),
+      };
     });
 
-    onSubmit(data);
-    // e.target.reset();
+    dispatch({
+      type: 'WRITE',
+      payload: {
+        data: newData,
+      },
+    });
+
+    onSubmit(newData);
+    // e.target.reset()
   };
 
   return (
