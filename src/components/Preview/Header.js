@@ -44,7 +44,7 @@ const Header = ({ data }) => {
           <Text style={[styles.name, { color: 'gray' }]}>{' ' + lastName}</Text>
         </Text>
 
-        {title && <Subtitle>{title}</Subtitle>}
+        {title ? <Subtitle>{title}</Subtitle> : null}
       </View>
 
       <View style={styles.contactInfo}>

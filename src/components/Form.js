@@ -21,6 +21,7 @@ const Form = ({ schema, onSubmit }) => {
     e.preventDefault();
 
     const newData = {};
+    let errors = [];
 
     Object.entries(data).forEach(([blockName, data]) => {
       newData[blockName] = {
@@ -29,10 +30,13 @@ const Form = ({ schema, onSubmit }) => {
           const newGroupData = {};
 
           Object.entries(group.fields).forEach(([fieldName, value]) => {
-            const errorMsg = validateInput(
-              value.value,
-              schema[blockName].fields[fieldName]
-            );
+            const fieldSchema = schema[blockName].fields[fieldName];
+
+            const errorMsg = validateInput(value.value, fieldSchema);
+
+            if (errorMsg) {
+              errors.push([fieldSchema.displayName, errorMsg]);
+            }
 
             newGroupData[fieldName] = {
               ...value,
@@ -53,7 +57,7 @@ const Form = ({ schema, onSubmit }) => {
       },
     });
 
-    onSubmit(newData);
+    onSubmit(errors);
     // e.target.reset()
   };
 

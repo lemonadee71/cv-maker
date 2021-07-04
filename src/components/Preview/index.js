@@ -45,7 +45,6 @@ const styles = StyleSheet.create({
 const Preview = () => {
   const { data } = useFormReducer();
   const formData = reduceToValue(data);
-  console.log(JSON.stringify(formData, null, 2));
 
   return (
     <PDFViewer width="100%" height="700px">

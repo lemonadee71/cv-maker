@@ -221,7 +221,7 @@ const formSchema = {
     },
   },
   training: {
-    displayName: 'Training / Certifications / Organization',
+    displayName: 'Training / Certifications',
     muiStyle: {
       variant: 'outlined',
     },
@@ -231,7 +231,7 @@ const formSchema = {
       name: {
         type: 'text',
         displayName: 'Name',
-        placeholder: 'Training / Certificate / Name of organization',
+        placeholder: 'Training / Certificate',
         autocomplete: true,
         muiStyle: {
           span: {

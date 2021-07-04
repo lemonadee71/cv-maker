@@ -3,16 +3,16 @@ import formSchema from './formSchema';
 
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@material-ui/lab/AlertTitle';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Preview from './components/Preview';
 import Form from './components/Form';
 import { FormProvider } from './context';
-import { reduceToValue } from './utils';
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -29,13 +29,21 @@ const lightTheme = createMuiTheme({
 const App = () => {
   const isDarkModeEnabled = useMediaQuery('(prefers-color-scheme: dark)');
   const [showPreview, setShowPreview] = useState(true);
+  const [errorMessages, setErrorMessages] = useState([]);
 
-  const handleSubmit = (data) => {
-    console.log(JSON.stringify(reduceToValue(data), null, 2));
+  const handleSubmit = (errors) => {
+    if (errors.length) {
+      setErrorMessages(errors.map((error) => error.join(': ')));
+      window.scrollTo(0, 0);
+    } else {
+      setErrorMessages([]);
+      setShowPreview(true);
+    }
   };
 
   return (
-    <>
+    <ThemeProvider theme={isDarkModeEnabled ? darkTheme : lightTheme}>
+      <CssBaseline />
       <Paper square={true} elevation={3} component="header">
         <Box
           height="4rem"
@@ -49,39 +57,35 @@ const App = () => {
           <h1 className="header__title">CV Maker</h1>
         </Box>
       </Paper>
-      <ThemeProvider theme={isDarkModeEnabled ? darkTheme : lightTheme}>
-        <CssBaseline />
-        <Box display="flex" justifyContent="center" mb={3}>
-          <ButtonGroup
-            variant="contained"
-            color="primary"
-            aria-label="contained primary button group"
-          >
-            <Button
-              color={!showPreview ? 'primary' : 'secondary'}
-              onClick={() => setShowPreview(false)}
-            >
-              Edit
-            </Button>
-            <Button
-              color={showPreview ? 'primary' : 'secondary'}
-              onClick={() => setShowPreview(true)}
-            >
-              Preview
-            </Button>
-          </ButtonGroup>
+      <Container maxWidth={'md'}>
+        <Box mb={3}>
+          {errorMessages.length !== 0 && (
+            <Alert severity="error" style={{ width: '100%' }}>
+              <AlertTitle>Error</AlertTitle>
+              {errorMessages.join('\n')}
+            </Alert>
+          )}
         </Box>
-        <Container maxWidth={'md'}>
-          <FormProvider schema={formSchema}>
-            {showPreview ? (
+        <FormProvider schema={formSchema}>
+          {showPreview ? (
+            <Box mt={3}>
+              <Box p={2} mb={2} display="flex" justifyContent="center">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => setShowPreview(false)}
+                >
+                  Go Back to Editing
+                </Button>
+              </Box>
               <Preview />
-            ) : (
-              <Form schema={formSchema} onSubmit={handleSubmit} />
-            )}
-          </FormProvider>
-        </Container>
-      </ThemeProvider>
-    </>
+            </Box>
+          ) : (
+            <Form schema={formSchema} onSubmit={handleSubmit} />
+          )}
+        </FormProvider>
+      </Container>
+    </ThemeProvider>
   );
 };
 
