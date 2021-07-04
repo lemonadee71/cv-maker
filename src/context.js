@@ -6,6 +6,8 @@ const formContextReducer = (schema) => (state, action) => {
   const block = state[blockName];
 
   switch (action.type) {
+    case 'WRITE':
+      return data;
     case 'ADD':
       return {
         ...state,

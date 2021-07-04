@@ -1,14 +1,16 @@
 {
-  "personal": {
-    "firstName": "John",
-    "lastName": "Doe",
-    "title": "Web Developer",
-    "address": "Caloocan City, Metro Manila",
-    "phone": "+63 XXX XXX XXXX",
-    "email": "user@example.com",
-    "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, nesciunt? Dolorum, asperiores aperiam omnis veritatis cupiditate alias repellendus. Repellat facilis similique dolores eligendi ad laboriosam nulla totam odio vero quam in ratione hic, accusantium numquam sunt maxime explicabo. Quo nam tempora quae est reiciendis harum ex maxime aspernatur, rem quidem. Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, nesciunt? Dolorum, asperiores aperiam omnis veritatis cupiditate alias repellendus. Repellat facilis similique dolores eligendi ad laboriosam nulla totam odio vero quam in ratione hic, accusantium numquam sunt maxime explicabo.",
-    "skills": "HTML,CSS,JavaScript,React,Git"
-  },
+  "personal": [
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "title": "Web Developer",
+      "address": "Caloocan City, Metro Manila",
+      "phone": "+63 XXX XXX XXXX",
+      "email": "user@example.com",
+      "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, nesciunt? Dolorum, asperiores aperiam omnis veritatis cupiditate alias repellendus. Repellat facilis similique dolores eligendi ad laboriosam nulla totam odio vero quam in ratione hic, accusantium numquam sunt maxime explicabo. Quo nam tempora quae est reiciendis harum ex maxime aspernatur, rem quidem. Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, nesciunt? Dolorum, asperiores aperiam omnis veritatis cupiditate alias repellendus. Repellat facilis similique dolores eligendi ad laboriosam nulla totam odio vero quam in ratione hic, accusantium numquam sunt maxime explicabo.",
+      "skills": "HTML,CSS,JavaScript,React,Git"
+    }
+  ],
   "experience": [
     {
       "position": "POSITION TITLE HERE",

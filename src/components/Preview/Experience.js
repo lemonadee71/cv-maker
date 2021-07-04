@@ -3,7 +3,7 @@ import { View } from '@react-pdf/renderer';
 import { BodyText, Section, Subtitle, Title } from './styles';
 
 export default function ExperienceSection({ data }) {
-  return (
+  return data.length ? (
     <Section style={[{ borderBottom: 'none' }]}>
       <Title>Work Experience</Title>
       {data.map((entry, i) => (
@@ -18,5 +18,5 @@ export default function ExperienceSection({ data }) {
         </View>
       ))}
     </Section>
-  );
+  ) : null;
 }

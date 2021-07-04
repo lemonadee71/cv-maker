@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
 });
 
 export default function EducationSection({ data }) {
-  return (
+  return data.length ? (
     <Section>
       <Title>Education</Title>
       {data.map((entry, i) => (
@@ -22,5 +22,5 @@ export default function EducationSection({ data }) {
         </View>
       ))}
     </Section>
-  );
+  ) : null;
 }

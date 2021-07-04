@@ -7,7 +7,8 @@ import {
   PDFViewer,
 } from '@react-pdf/renderer';
 import { useFormReducer } from '../../context';
-import data from '../../defaultData.json';
+import { reduceToValue } from '../../utils';
+// import formData from '../../defaultData.json';
 
 import Header from './Header';
 import Profile from './Profile';
@@ -42,21 +43,23 @@ const styles = StyleSheet.create({
 });
 
 const Preview = () => {
-  // const { data } = useFormReducer();
+  const { data } = useFormReducer();
+  const formData = reduceToValue(data);
+  console.log(JSON.stringify(formData, null, 2));
 
   return (
     <PDFViewer width="100%" height="700px">
       <Document className="preview">
         <Page size="A4" style={styles.page}>
-          <Header data={data.personal} />
+          <Header data={formData.personal[0]} />
           <View style={styles.content}>
             <View style={styles.leftColumn}>
-              <EducationSection data={data.education} />
-              <Skills data={data.personal.skills} />
+              <EducationSection data={formData.education} />
+              <Skills data={formData.personal[0].skills} />
             </View>
             <View style={styles.rightColumn}>
-              <Profile data={data.personal.details} />
-              <ExperienceSection data={data.experience} />
+              <Profile data={formData.personal[0].details} />
+              <ExperienceSection data={formData.experience} />
             </View>
           </View>
         </Page>

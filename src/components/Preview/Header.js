@@ -44,13 +44,13 @@ const Header = ({ data }) => {
           <Text style={[styles.name, { color: 'gray' }]}>{' ' + lastName}</Text>
         </Text>
 
-        <Subtitle>{title}</Subtitle>
+        {title && <Subtitle>{title}</Subtitle>}
       </View>
 
       <View style={styles.contactInfo}>
-        <BodyText>{phone}</BodyText>
-        <BodyText>{email}</BodyText>
-        <BodyText>{address}</BodyText>
+        {phone ? <BodyText>{phone}</BodyText> : null}
+        {email ? <BodyText>{email}</BodyText> : null}
+        {address ? <BodyText>{address}</BodyText> : null}
       </View>
     </View>
   );
