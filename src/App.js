@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import formSchema from './formSchema';
+import cvFormSchema from './schema/cvForm';
 
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
@@ -49,7 +49,7 @@ const App = () => {
         </Box>
       </Paper>
       <Container maxWidth={'md'}>
-        <FormProvider schema={formSchema}>
+        <FormProvider schema={cvFormSchema}>
           {showPreview ? (
             <Box mt={3}>
               <Box p={2} mb={2} display="flex" justifyContent="center">
@@ -64,7 +64,7 @@ const App = () => {
               <Preview />
             </Box>
           ) : (
-            <Form schema={formSchema} onSubmit={handleSubmit} />
+            <Form schema={cvFormSchema} onSubmit={handleSubmit} />
           )}
         </FormProvider>
       </Container>

@@ -1,3 +1,5 @@
+import styles from './styles';
+
 const emailRegex =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -6,11 +8,11 @@ const validateLength = (allowableLength) => (str) =>
     ? `Must be less than ${allowableLength} characters`
     : '';
 
-const formSchema = {
+const cvFormSchema = {
   personal: {
     displayName: 'Personal Information',
     muiStyle: {
-      variant: 'outlined',
+      ...styles.block,
     },
     fields: {
       firstName: {
@@ -19,10 +21,7 @@ const formSchema = {
         required: true,
         autocomplete: true,
         muiStyle: {
-          span: {
-            xs: 12,
-            sm: 6,
-          },
+          ...styles.field.halfWidth,
         },
       },
       lastName: {
@@ -31,10 +30,7 @@ const formSchema = {
         required: true,
         autocomplete: true,
         muiStyle: {
-          span: {
-            xs: 12,
-            sm: 6,
-          },
+          ...styles.field.halfWidth,
         },
       },
       title: {
@@ -42,10 +38,7 @@ const formSchema = {
         displayName: 'Title',
         autocomplete: true,
         muiStyle: {
-          span: {
-            xs: 12,
-            sm: 6,
-          },
+          ...styles.field.halfWidth,
         },
       },
       email: {
@@ -54,10 +47,7 @@ const formSchema = {
         required: true,
         autocomplete: true,
         muiStyle: {
-          span: {
-            xs: 12,
-            sm: 6,
-          },
+          ...styles.field.halfWidth,
         },
         validate: (str) =>
           emailRegex.test(str) ? '' : 'Invalid email address',
@@ -66,10 +56,7 @@ const formSchema = {
         type: 'phone',
         displayName: 'Phone number',
         muiStyle: {
-          span: {
-            xs: 12,
-            sm: 6,
-          },
+          ...styles.field.halfWidth,
         },
       },
       address: {
@@ -77,9 +64,7 @@ const formSchema = {
         displayName: 'Address',
         autocomplete: true,
         muiStyle: {
-          span: {
-            xs: 12,
-          },
+          ...styles.field.fullWidth,
         },
       },
       details: {
@@ -87,10 +72,8 @@ const formSchema = {
         displayName: 'Profile',
         placeholder: 'About yourself',
         muiStyle: {
+          ...styles.field.fullWidth,
           rows: 5,
-          span: {
-            xs: 12,
-          },
         },
         validate: validateLength(500),
       },
@@ -99,10 +82,8 @@ const formSchema = {
         displayName: 'Skills',
         helperText: 'Separate different skills with comma',
         muiStyle: {
+          ...styles.field.fullWidth,
           rows: 3,
-          span: {
-            xs: 12,
-          },
         },
       },
     },
@@ -110,7 +91,7 @@ const formSchema = {
   experience: {
     displayName: 'Experience',
     muiStyle: {
-      variant: 'outlined',
+      ...styles.block,
     },
     multiple: true,
     fields: {
@@ -119,10 +100,7 @@ const formSchema = {
         displayName: 'Position',
         autocomplete: true,
         muiStyle: {
-          span: {
-            xs: 12,
-            sm: 6,
-          },
+          ...styles.field.halfWidth,
         },
       },
       company: {
@@ -130,20 +108,15 @@ const formSchema = {
         displayName: 'Company',
         autocomplete: true,
         muiStyle: {
-          span: {
-            xs: 12,
-            sm: 6,
-          },
+          ...styles.field.halfWidth,
         },
       },
       description: {
         type: 'multiline',
         displayName: 'Job description',
         muiStyle: {
+          ...styles.field.fullWidth,
           rows: 5,
-          span: {
-            xs: 12,
-          },
         },
         validate: validateLength(500),
       },
@@ -151,10 +124,7 @@ const formSchema = {
         type: 'date',
         displayName: 'From',
         muiStyle: {
-          span: {
-            xs: 12,
-            sm: 6,
-          },
+          ...styles.field.halfWidth,
         },
       },
       endDate: {
@@ -162,10 +132,7 @@ const formSchema = {
         displayName: 'To',
         helperText: 'Leave this out if still working at present',
         muiStyle: {
-          span: {
-            xs: 12,
-            sm: 6,
-          },
+          ...styles.field.halfWidth,
         },
       },
     },
@@ -173,7 +140,7 @@ const formSchema = {
   education: {
     displayName: 'Education',
     muiStyle: {
-      variant: 'outlined',
+      ...styles.block,
     },
     multiple: true,
     defaultGroups: 0,
@@ -183,9 +150,7 @@ const formSchema = {
         displayName: 'School',
         autocomplete: true,
         muiStyle: {
-          span: {
-            xs: 12,
-          },
+          ...styles.field.fullWidth,
         },
       },
       degree: {
@@ -193,29 +158,21 @@ const formSchema = {
         displayName: 'Degree',
         autocomplete: true,
         muiStyle: {
-          span: {
-            xs: 12,
-          },
+          ...styles.field.fullWidth,
         },
       },
       startDate: {
         type: 'date',
         displayName: 'From',
         muiStyle: {
-          span: {
-            xs: 12,
-            sm: 6,
-          },
+          ...styles.field.halfWidth,
         },
       },
       endDate: {
         type: 'date',
         displayName: 'To',
         muiStyle: {
-          span: {
-            xs: 12,
-            sm: 6,
-          },
+          ...styles.field.halfWidth,
         },
       },
     },
@@ -234,33 +191,25 @@ const formSchema = {
         placeholder: 'Training / Certificate',
         autocomplete: true,
         muiStyle: {
-          span: {
-            xs: 12,
-          },
+          ...styles.field.fullWidth,
         },
       },
       startDate: {
         type: 'date',
         displayName: 'From',
         muiStyle: {
-          span: {
-            xs: 12,
-            sm: 6,
-          },
+          ...styles.field.halfWidth,
         },
       },
       endDate: {
         type: 'date',
         displayName: 'To',
         muiStyle: {
-          span: {
-            xs: 12,
-            sm: 6,
-          },
+          ...styles.field.halfWidth,
         },
       },
     },
   },
 };
 
-export default formSchema;
+export default cvFormSchema;
