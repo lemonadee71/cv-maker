@@ -5,6 +5,8 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@material-ui/lab/AlertTitle';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -27,9 +29,16 @@ const lightTheme = createMuiTheme({
 const App = () => {
   const isDarkModeEnabled = useMediaQuery('(prefers-color-scheme: dark)');
   const [showPreview, setShowPreview] = useState(false);
+  const [errorMessages, setErrorMessages] = useState([]);
 
-  const handleSubmit = () => {
-    setShowPreview(true);
+  const handleSubmit = (errors) => {
+    if (errors.length) {
+      setErrorMessages(errors.map((error) => error.join(': ')));
+      window.scrollTo(0, 0);
+    } else {
+      setErrorMessages([]);
+      setShowPreview(true);
+    }
   };
 
   return (
@@ -49,6 +58,18 @@ const App = () => {
         </Box>
       </Paper>
       <Container maxWidth={'md'}>
+        <Box mb={3}>
+          {errorMessages.length !== 0 && (
+            <Alert severity="error" style={{ width: '100%' }}>
+              <AlertTitle>Error</AlertTitle>
+              <ul style={{ margin: 0, padding: 0 }}>
+                {errorMessages.map((msg) => (
+                  <li>{msg}</li>
+                ))}
+              </ul>
+            </Alert>
+          )}
+        </Box>
         <FormProvider schema={cvFormSchema}>
           {showPreview ? (
             <Box mt={3}>

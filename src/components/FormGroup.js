@@ -31,6 +31,10 @@ const FormGroup = ({
     });
   }, [debouncedFormData, id, blockName, dispatch]);
 
+  useEffect(() => {
+    setFormData(data);
+  }, [data, setFormData]);
+
   const validateInput = (name, value) => {
     const fieldSchema = fields[name];
     const errorMsg =

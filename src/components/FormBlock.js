@@ -8,7 +8,6 @@ import FormGroup from './FormGroup';
 
 const FormBlock = ({ blockName, schema }) => {
   const { data, dispatch } = useFormReducer();
-  // console.log(`Rendered ${blockName}`);
 
   const handleAdd = () => {
     dispatch({
@@ -47,6 +46,7 @@ const FormBlock = ({ blockName, schema }) => {
           deleteHandler={handleDelete}
         />
       ))}
+
       {schema.multiple && (
         <Box mt={1}>
           <Button variant="contained" color="primary" onClick={handleAdd}>
