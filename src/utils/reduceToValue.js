@@ -1,17 +1,15 @@
 export const reduceToValue = (data) => {
-  const reducedData = {};
+  return Object.entries(data).reduce((reducedData, [name, blockData]) => {
+    reducedData[name] = blockData.groups
+      .map((group) =>
+        Object.entries(group.fields).reduce((groupData, [field, value]) => {
+          groupData[field] = value.value.trim() || '';
 
-  Object.entries(data).forEach(([name, blockData]) => {
-    reducedData[name] = blockData.groups.map((group) => {
-      const groupData = {};
+          return groupData;
+        }, {})
+      )
+      .filter((group) => !Object.values(group).every((value) => !value));
 
-      Object.entries(group.fields).forEach(([field, value]) => {
-        groupData[field] = value.value.trim() || '';
-      });
-
-      return groupData;
-    });
-  });
-
-  return reducedData;
+    return reducedData;
+  }, {});
 };
