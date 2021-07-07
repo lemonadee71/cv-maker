@@ -1,5 +1,5 @@
 import React from 'react';
-import { BodyText, Section, Title } from './styles';
+import { BodyText, Section, Title } from './styled';
 
 export default function Profile({ data }) {
   return data ? (

@@ -7,7 +7,7 @@
       "address": "Caloocan City, Metro Manila",
       "phone": "+63 XXX XXX XXXX",
       "email": "user@example.com",
-      "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, nesciunt? Dolorum, asperiores aperiam omnis veritatis cupiditate alias repellendus. Repellat facilis similique dolores eligendi ad laboriosam nulla totam odio vero quam in ratione hic, accusantium numquam sunt maxime explicabo. Quo nam tempora quae est reiciendis harum ex maxime aspernatur, rem quidem. Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, nesciunt? Dolorum, asperiores aperiam omnis veritatis cupiditate alias repellendus. Repellat facilis similique dolores eligendi ad laboriosam nulla totam odio vero quam in ratione hic, accusantium numquam sunt maxime explicabo.",
+      "details": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, nesciunt? Dolorum, asperiores aperiam omnis veritatis cupiditate alias repellendus. Repellat facilis similique dolores eligendi ad laboriosam nulla totam odio vero quam in ratione hic, accusantium numquam sunt maxime explicabo. Quo nam tempora quae est reiciendis harum ex maxime aspernatur, rem quidem. Lorem ipsum dolor sit amet consectetur adipisicing elit.",
       "skills": "HTML,CSS,JavaScript,React,Git"
     }
   ],
@@ -25,19 +25,12 @@
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, nesciunt? Dolorum, asperiores aperiam omnis veritatis cupiditate alias repellendus. Repellat facilis similique dolores eligendi ad laboriosam nulla totam odio vero quam in ratione hic, accusantium numquam sunt maxime explicabo.",
       "startDate": "YYYY-MM-DD",
       "endDate": "YYYY-MM-DD"
-    },
-    {
-      "position": "POSITION TITLE HERE",
-      "company": "COMPANY",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, nesciunt? Dolorum, asperiores aperiam omnis veritatis cupiditate alias repellendus. Repellat facilis similique dolores eligendi ad laboriosam nulla totam odio vero quam in ratione hic, accusantium numquam sunt maxime explicabo.",
-      "startDate": "YYYY-MM-DD",
-      "endDate": "YYYY-MM-DD"
     }
   ],
   "education": [
     {
-      "school": "SCHOOL HERE",
-      "degree": "YOUR DEGREE",
+      "school": "Polytechnic University of the Philippines",
+      "degree": "Bachelor of Science in Civil Engineering",
       "startDate": "YYYY-MM-DD",
       "endDate": "YYYY-MM-DD"
     },

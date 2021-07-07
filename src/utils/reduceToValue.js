@@ -1,5 +1,5 @@
-export const reduceToValue = (data) => {
-  return Object.entries(data).reduce((reducedData, [name, blockData]) => {
+export const reduceToValue = (data) =>
+  Object.entries(data).reduce((reducedData, [name, blockData]) => {
     reducedData[name] = blockData.groups
       .map((group) =>
         Object.entries(group.fields).reduce((groupData, [field, value]) => {
@@ -12,4 +12,3 @@ export const reduceToValue = (data) => {
 
     return reducedData;
   }, {});
-};

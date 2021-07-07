@@ -8,59 +8,47 @@ import {
 } from '@react-pdf/renderer';
 import { useFormReducer } from '../../context';
 import { reduceToValue } from '../../utils';
-// import formData from '../../defaultData.json';
+import formData from '../../defaultData.json';
 
 import Header from './Header';
 import Profile from './Profile';
 import Skills from './Skills';
 import EducationSection from './Education';
 import ExperienceSection from './Experience';
+import { Divider } from './styled';
 
 const styles = StyleSheet.create({
   page: {
     width: '100%',
-    margin: 30,
+    paddingVertical: 35,
+    paddingHorizontal: 40,
     // fontFamily: 'Times-Roman',
-  },
-  content: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '90%',
-    height: '80%',
-    paddingVertical: 5,
-  },
-  leftColumn: {
-    display: 'flex',
-    width: '35%',
-    padding: 10,
-  },
-  rightColumn: {
-    display: 'flex',
-    width: '65%',
-    padding: 10,
-    borderLeft: '1.5px solid gray',
   },
 });
 
 const Preview = () => {
-  const { data } = useFormReducer();
-  const formData = reduceToValue(data);
+  // const { data } = useFormReducer();
+  // const formData = reduceToValue(data);
+  const content = [
+    <Profile data={formData.personal[0].details} />,
+    <ExperienceSection data={formData.experience} />,
+    <EducationSection data={formData.education} />,
+    <Skills data={formData.personal[0].skills} />,
+  ];
 
   return (
     <PDFViewer width="100%" height="700px">
       <Document className="preview">
-        <Page size="A4" style={styles.page}>
+        <Page size="A4" style={styles.page} wrap>
           <Header data={formData.personal[0]} />
-          <View style={styles.content}>
-            <View style={styles.leftColumn}>
-              <EducationSection data={formData.education} />
-              <Skills data={formData.personal[0].skills} />
+          {content.map((section, i) => (
+            <View key={i}>
+              {section}
+              {i + 1 !== content.length ? (
+                <Divider mt={5} mb={15} color="gray" />
+              ) : null}
             </View>
-            <View style={styles.rightColumn}>
-              <Profile data={formData.personal[0].details} />
-              <ExperienceSection data={formData.experience} />
-            </View>
-          </View>
+          ))}
         </Page>
       </Document>
     </PDFViewer>

@@ -26,7 +26,7 @@ const lightTheme = createMuiTheme({
 
 const App = () => {
   const isDarkModeEnabled = useMediaQuery('(prefers-color-scheme: dark)');
-  const [showPreview, setShowPreview] = useState(false);
+  const [showPreview, setShowPreview] = useState(true);
 
   const handleSubmit = () => {
     setShowPreview(true);
