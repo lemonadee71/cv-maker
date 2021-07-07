@@ -13,8 +13,7 @@ import formData from '../../defaultData.json';
 import Header from './Header';
 import Profile from './Profile';
 import Skills from './Skills';
-import EducationSection from './Education';
-import ExperienceSection from './Experience';
+import GenericSection from './GenericSection';
 import { Divider } from './styled';
 
 const styles = StyleSheet.create({
@@ -31,8 +30,16 @@ const Preview = () => {
   // const formData = reduceToValue(data);
   const content = [
     <Profile data={formData.personal[0].details} />,
-    <ExperienceSection data={formData.experience} />,
-    <EducationSection data={formData.education} />,
+    <GenericSection
+      name="Experience"
+      data={formData.experience}
+      mappings={['position', 'startDate', 'endDate', 'company', 'description']}
+    />,
+    <GenericSection
+      name="Education"
+      data={formData.education}
+      mappings={['school', 'startDate', 'endDate', 'degree']}
+    />,
     <Skills data={formData.personal[0].skills} />,
   ];
 
