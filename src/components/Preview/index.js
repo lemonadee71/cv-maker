@@ -29,7 +29,6 @@ const Preview = () => {
   // const { data } = useFormReducer();
   // const formData = reduceToValue(data);
   const content = [
-    <Profile data={formData.personal[0].details} />,
     <GenericSection
       name="Experience"
       data={formData.experience}
@@ -40,6 +39,11 @@ const Preview = () => {
       data={formData.education}
       mappings={['school', 'startDate', 'endDate', 'degree']}
     />,
+    <GenericSection
+      name="Training / Certifications"
+      data={formData.training}
+      mappings={['name', 'startDate', 'endDate']}
+    />,
     <Skills data={formData.personal[0].skills} />,
   ];
 
@@ -48,6 +52,7 @@ const Preview = () => {
       <Document className="preview">
         <Page size="A4" style={styles.page} wrap>
           <Header data={formData.personal[0]} />
+          <Profile data={formData.personal[0].details} />
           {content.map((section, i) => (
             <View key={i}>
               {section}

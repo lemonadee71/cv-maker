@@ -40,5 +40,17 @@
       "startDate": "YYYY-MM-DD",
       "endDate": "YYYY-MM-DD"
     }
+  ],
+  "training": [
+    {
+      "name": "SAMPLE CERTIFICATION",
+      "startDate": "YYYY-MM-DD",
+      "endDate": "YYYY-MM-DD"
+    },
+    {
+      "name": "SAMPLE CERTIFICATION",
+      "startDate": "YYYY-MM-DD",
+      "endDate": "YYYY-MM-DD"
+    }
   ]
 }
