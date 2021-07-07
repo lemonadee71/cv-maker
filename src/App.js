@@ -13,6 +13,8 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import Preview from './components/Preview';
 import Form from './components/Form';
 import { FormProvider } from './context';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 const darkTheme = createMuiTheme({
   palette: {
@@ -63,31 +65,33 @@ const App = () => {
             <Alert severity="error" style={{ width: '100%' }}>
               <AlertTitle>Error</AlertTitle>
               <ul style={{ margin: 0, padding: 0 }}>
-                {errorMessages.map((msg) => (
-                  <li>{msg}</li>
+                {errorMessages.map((msg, i) => (
+                  <li key={i}>{msg}</li>
                 ))}
               </ul>
             </Alert>
           )}
         </Box>
-        <FormProvider schema={cvFormSchema}>
-          {showPreview ? (
-            <Box mt={3}>
-              <Box p={2} mb={2} display="flex" justifyContent="center">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => setShowPreview(false)}
-                >
-                  Go Back to Editing
-                </Button>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <FormProvider schema={cvFormSchema}>
+            {showPreview ? (
+              <Box mt={3}>
+                <Box p={2} mb={2} display="flex" justifyContent="center">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setShowPreview(false)}
+                  >
+                    Go Back to Editing
+                  </Button>
+                </Box>
+                <Preview />
               </Box>
-              <Preview />
-            </Box>
-          ) : (
-            <Form schema={cvFormSchema} onSubmit={handleSubmit} />
-          )}
-        </FormProvider>
+            ) : (
+              <Form schema={cvFormSchema} onSubmit={handleSubmit} />
+            )}
+          </FormProvider>
+        </MuiPickersUtilsProvider>
       </Container>
     </ThemeProvider>
   );

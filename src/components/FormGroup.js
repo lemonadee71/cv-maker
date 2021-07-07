@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import PhoneField from 'material-ui-phone-number';
+import { DatePicker } from '@material-ui/pickers';
 
 const FormGroup = ({
   id,
@@ -55,7 +56,6 @@ const FormGroup = ({
       newData.error = !!errorMsg;
       newData.errorMsg = errorMsg;
     }
-
     setFormData((prevData) => ({ ...prevData, [name]: newData }));
   };
 
@@ -71,17 +71,57 @@ const FormGroup = ({
     setFormData((prevData) => ({ ...prevData, [name]: newData }));
   };
 
+  const determineInput = (type, name, props) => {
+    switch (type) {
+      case 'phone':
+        return (
+          <PhoneField
+            {...props}
+            defaultCountry={'ph'}
+            onBlur={(e) => handleBlur(name, e.target.value)}
+            onChange={(value) => handleChange(name, value)}
+          />
+        );
+      case 'date':
+        return (
+          <DatePicker
+            {...props}
+            onChange={(date) => {
+              handleChange(name, date);
+            }}
+            onAccept={(date) => {
+              handleBlur(name, date);
+            }}
+            placeholder="14/01/1970"
+            format="dd/MM/yyyy"
+            inputVariant="outlined"
+            clearable
+            disableFuture
+          />
+        );
+      default:
+        return (
+          <TextField
+            {...props}
+            type={type === 'multiline' ? 'text' : type}
+            onChange={(e) => handleChange(name, e.target.value)}
+            onBlur={(e) => handleBlur(name, e.target.value)}
+          />
+        );
+    }
+  };
+
   const inputFields = Object.entries(fields).map(([name, schema]) => {
     const props = {
       label: schema.displayName,
       defaultValue: schema.defaultValue,
-      value: formData[name].value,
-      error: formData[name].error,
+      value:
+        formData[name].value || (schema.type === 'date' ? null : undefined),
+      error: formData[name].error || false,
       helperText: formData[name].errorMsg || schema.helperText || '',
       placeholder: schema.placeholder || '',
       inputProps: { 'data-fieldname': name },
       InputLabelProps: schema.type === 'date' ? { shrink: true } : null,
-      type: ['multiline', 'phone'].includes(schema.type) ? 'text' : schema.type,
       variant: blockStyle.variant,
       rows: schema.muiStyle.rows,
       fullWidth: schema.muiStyle.fullWidth || true,
@@ -96,30 +136,7 @@ const FormGroup = ({
     return (
       // Assume that schema always has muiStyle
       <Grid item key={id + name} {...schema.muiStyle.span}>
-        {schema.type === 'phone' ? (
-          <PhoneField
-            {...props}
-            defaultCountry={'ph'}
-            onBlur={(e) => handleBlur('phone', e.target.value)}
-            onChange={(value) => handleChange('phone', value)}
-          />
-        ) : (
-          <TextField
-            {...props}
-            onChange={(e) =>
-              handleChange(
-                e.target.getAttribute('data-fieldname'),
-                e.target.value
-              )
-            }
-            onBlur={(e) =>
-              handleBlur(
-                e.target.getAttribute('data-fieldname'),
-                e.target.value
-              )
-            }
-          />
-        )}
+        {determineInput(schema.type, name, props)}
       </Grid>
     );
   });
@@ -131,13 +148,15 @@ const FormGroup = ({
       </Grid>
 
       {multiple && (
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => deleteHandler(id)}
-        >
-          Delete
-        </Button>
+        <Box mt={2}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => deleteHandler(id)}
+          >
+            Delete
+          </Button>
+        </Box>
       )}
     </Box>
   );

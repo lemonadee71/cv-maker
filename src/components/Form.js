@@ -62,7 +62,7 @@ const Form = ({ schema, onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} novalidate="novalidate">
+    <form onSubmit={handleSubmit} noValidate={true}>
       {Object.entries(schema).map(([name, blockSchema]) => (
         <FormBlock key={name} blockName={name} schema={blockSchema} />
       ))}
