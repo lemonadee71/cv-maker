@@ -6,6 +6,7 @@ const style = StyleSheet.create({
   skills: {
     display: 'flex',
     flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   chip: {
     fontSize: 11,

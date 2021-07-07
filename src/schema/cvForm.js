@@ -98,6 +98,7 @@ const cvFormSchema = {
       position: {
         type: 'text',
         displayName: 'Position',
+        required: true,
         autocomplete: true,
         muiStyle: {
           ...styles.field.halfWidth,
@@ -106,6 +107,7 @@ const cvFormSchema = {
       company: {
         type: 'text',
         displayName: 'Company',
+        required: true,
         autocomplete: true,
         muiStyle: {
           ...styles.field.halfWidth,
@@ -148,6 +150,7 @@ const cvFormSchema = {
       school: {
         type: 'text',
         displayName: 'School',
+        required: true,
         autocomplete: true,
         muiStyle: {
           ...styles.field.fullWidth,
@@ -189,6 +192,7 @@ const cvFormSchema = {
         type: 'text',
         displayName: 'Name',
         placeholder: 'Training / Certificate',
+        required: true,
         autocomplete: true,
         muiStyle: {
           ...styles.field.fullWidth,

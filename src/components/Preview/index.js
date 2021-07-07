@@ -8,7 +8,7 @@ import {
 } from '@react-pdf/renderer';
 import { useFormReducer } from '../../context';
 import { reduceToValue } from '../../utils';
-import formData from '../../defaultData.json';
+// import formData from '../../defaultData.json';
 
 import Header from './Header';
 import Profile from './Profile';
@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
 });
 
 const Preview = () => {
-  // const { data } = useFormReducer();
-  // const formData = reduceToValue(data);
+  const { data } = useFormReducer();
+  const formData = reduceToValue(data);
   const content = [
     <GenericSection
       name="Experience"
