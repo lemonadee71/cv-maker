@@ -85,6 +85,12 @@ const cvFormSchema = {
           ...styles.field.fullWidth,
           rows: 3,
         },
+        validate: (str) => {
+          const validate = validateLength(50);
+          return str.split(',').some((skill) => validate(skill.trim()))
+            ? 'Individual skill must be less than 50 characters'
+            : '';
+        },
       },
     },
   },
