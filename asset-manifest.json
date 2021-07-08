@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/lemonadee71/cv-maker/static/js/main.95d0b930.chunk.js",
-    "main.js.map": "/lemonadee71/cv-maker/static/js/main.95d0b930.chunk.js.map",
-    "runtime-main.js": "/lemonadee71/cv-maker/static/js/runtime-main.f0061e40.js",
-    "runtime-main.js.map": "/lemonadee71/cv-maker/static/js/runtime-main.f0061e40.js.map",
-    "static/js/2.0660f51b.chunk.js": "/lemonadee71/cv-maker/static/js/2.0660f51b.chunk.js",
-    "static/js/2.0660f51b.chunk.js.map": "/lemonadee71/cv-maker/static/js/2.0660f51b.chunk.js.map",
-    "index.html": "/lemonadee71/cv-maker/index.html",
-    "static/js/2.0660f51b.chunk.js.LICENSE.txt": "/lemonadee71/cv-maker/static/js/2.0660f51b.chunk.js.LICENSE.txt"
+    "main.js": "/cv-maker/static/js/main.95d0b930.chunk.js",
+    "main.js.map": "/cv-maker/static/js/main.95d0b930.chunk.js.map",
+    "runtime-main.js": "/cv-maker/static/js/runtime-main.56641752.js",
+    "runtime-main.js.map": "/cv-maker/static/js/runtime-main.56641752.js.map",
+    "static/js/2.d5affa1a.chunk.js": "/cv-maker/static/js/2.d5affa1a.chunk.js",
+    "static/js/2.d5affa1a.chunk.js.map": "/cv-maker/static/js/2.d5affa1a.chunk.js.map",
+    "index.html": "/cv-maker/index.html",
+    "static/js/2.d5affa1a.chunk.js.LICENSE.txt": "/cv-maker/static/js/2.d5affa1a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.f0061e40.js",
-    "static/js/2.0660f51b.chunk.js",
+    "static/js/runtime-main.56641752.js",
+    "static/js/2.d5affa1a.chunk.js",
     "static/js/main.95d0b930.chunk.js"
   ]
 }
