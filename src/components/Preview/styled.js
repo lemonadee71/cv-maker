@@ -2,7 +2,7 @@ import { StyleSheet } from '@react-pdf/renderer';
 import { Text, View } from '@react-pdf/renderer';
 import globalStyles from './styles';
 
-const Divider = ({ style, color, width, stroke, strokeStyle, mt, mb }) => {
+const Divider = ({ color, width, stroke, strokeStyle, mt, mb, ...style }) => {
   const _style = StyleSheet.create({
     width,
     borderBottom: `${stroke} ${strokeStyle} ${color}`,
@@ -10,35 +10,53 @@ const Divider = ({ style, color, width, stroke, strokeStyle, mt, mb }) => {
     marginBottom: mb,
   });
 
-  return <View style={[_style, ...style]} />;
+  return <View style={[_style, style]} />;
 };
 
-const Section = ({ style, children }) => (
-  <View style={[globalStyles.section, ...style]}>{children}</View>
+const Wrapper = ({ children, wrap, fixed, ...style }) => (
+  <View style={style} wrap={wrap} fixed={fixed}>
+    {children}
+  </View>
 );
 
-const Title = ({ style, children }) => (
-  <Text style={[globalStyles.title, ...style]}>{children}</Text>
+const StyledText = ({ children, ...style }) => (
+  <Text style={style}>{children}</Text>
+);
+const Section = ({ children, ...style }) => (
+  <Wrapper {...globalStyles.section} {...style}>
+    {children}
+  </Wrapper>
 );
 
-const Subtitle = ({ style, children }) => (
-  <Text style={[globalStyles.subtitle, ...style]}>{children}</Text>
+const Title = ({ children, wrap, fixed, ...style }) => (
+  <StyledText wrap={wrap} fixed={fixed} {...globalStyles.title} {...style}>
+    {children}
+  </StyledText>
 );
 
-const BodyText = ({ style, children }) => (
-  <Text style={[globalStyles.text, ...style]}>{children}</Text>
+const Subtitle = ({ children, wrap, fixed, ...style }) => (
+  <StyledText wrap={wrap} fixed={fixed} {...globalStyles.subtitle} {...style}>
+    {children}
+  </StyledText>
+);
+
+const NormalText = ({ children, wrap, fixed, ...style }) => (
+  <StyledText wrap={wrap} fixed={fixed} {...globalStyles.text} {...style}>
+    {children}
+  </StyledText>
 );
 
 const defaultProps = {
-  style: [],
+  wrap: true,
+  fixed: false,
 };
 
 Section.defaultProps = defaultProps;
 Title.defaultProps = defaultProps;
 Subtitle.defaultProps = defaultProps;
-BodyText.defaultProps = defaultProps;
+NormalText.defaultProps = defaultProps;
+Wrapper.defaultProps = defaultProps;
 Divider.defaultProps = {
-  ...defaultProps,
   width: '100%',
   color: 'gray',
   stroke: '1px',
@@ -47,4 +65,4 @@ Divider.defaultProps = {
   mb: 5,
 };
 
-export { Section, Title, Subtitle, BodyText, Divider };
+export { Section, Title, Subtitle, NormalText, Divider, Wrapper, StyledText };

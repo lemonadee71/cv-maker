@@ -16,12 +16,6 @@ const globalStyles = StyleSheet.create({
   text: {
     fontSize: 11,
   },
-  textWithDate: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
   section: {
     paddingBottom: 10,
   },

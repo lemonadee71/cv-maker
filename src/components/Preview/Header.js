@@ -1,12 +1,8 @@
 import React from 'react';
-import { Text, View, StyleSheet } from '@react-pdf/renderer';
-import { BodyText, Divider, Subtitle } from './styled';
+import { View, StyleSheet } from '@react-pdf/renderer';
+import { NormalText, Divider, StyledText, Subtitle, Wrapper } from './styled';
 
 const styles = StyleSheet.create({
-  nameAndTitle: {
-    padding: 10,
-    textTransform: 'uppercase',
-  },
   fullName: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -31,19 +27,21 @@ const Header = ({ data }) => {
 
   return (
     <View>
-      <View style={styles.nameAndTitle}>
-        <Text style={styles.fullname}>
-          <Text style={styles.name}>{firstName}</Text>
-          <Text style={[styles.name, { color: 'gray' }]}>{' ' + lastName}</Text>
-        </Text>
+      <Wrapper padding={10} textTransform="uppercase">
+        <StyledText {...styles.fullname}>
+          <StyledText {...styles.name}>{firstName}</StyledText>
+          <StyledText {...styles.name} color="gray">
+            {' ' + lastName}
+          </StyledText>
+        </StyledText>
         {title ? <Subtitle>{title}</Subtitle> : null}
-      </View>
+      </Wrapper>
       <Divider stroke="3px" color="black" mt={0} mb={0} />
-      <View style={styles.contactInfo}>
-        {phone ? <BodyText>{phone}</BodyText> : null}
-        {email ? <BodyText>{email}</BodyText> : null}
-        {address ? <BodyText>{address}</BodyText> : null}
-      </View>
+      <Wrapper {...styles.contactInfo}>
+        {phone ? <NormalText>{phone}</NormalText> : null}
+        {email ? <NormalText>{email}</NormalText> : null}
+        {address ? <NormalText>{address}</NormalText> : null}
+      </Wrapper>
       <Divider stroke="1px" mt={0} mb={15} />
     </View>
   );

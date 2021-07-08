@@ -14,7 +14,6 @@ import Header from './Header';
 import Profile from './Profile';
 import Skills from './Skills';
 import GenericSection from './GenericSection';
-import { Divider } from './styled';
 
 const styles = StyleSheet.create({
   page: {
@@ -29,22 +28,39 @@ const Preview = () => {
   const { data } = useFormReducer();
   const formData = reduceToValue(data);
   const content = [
-    <GenericSection
-      name="Experience"
-      data={formData.experience}
-      mappings={['position', 'startDate', 'endDate', 'company', 'description']}
-    />,
-    <GenericSection
-      name="Education"
-      data={formData.education}
-      mappings={['school', 'startDate', 'endDate', 'degree']}
-    />,
-    <GenericSection
-      name="Training / Certifications"
-      data={formData.training}
-      mappings={['name', 'startDate', 'endDate']}
-    />,
-    <Skills data={formData.personal[0].skills} />,
+    (withDivider) => (
+      <GenericSection
+        name="Experience"
+        data={formData.experience}
+        mappings={[
+          'position',
+          'startDate',
+          'endDate',
+          'company',
+          'description',
+        ]}
+        withDivider={withDivider}
+      />
+    ),
+    (withDivider) => (
+      <GenericSection
+        name="Education"
+        data={formData.education}
+        mappings={['school', 'startDate', 'endDate', 'degree']}
+        withDivider={withDivider}
+      />
+    ),
+    (withDivider) => (
+      <GenericSection
+        name="Training / Certifications"
+        data={formData.training}
+        mappings={['name', 'startDate', 'endDate']}
+        withDivider={withDivider}
+      />
+    ),
+    (withDivider) => (
+      <Skills data={formData.personal[0].skills} withDivider={withDivider} />
+    ),
   ];
 
   return (
@@ -54,12 +70,7 @@ const Preview = () => {
           <Header data={formData.personal[0]} />
           <Profile data={formData.personal[0].details} />
           {content.map((section, i) => (
-            <View key={i}>
-              {section}
-              {i + 1 !== content.length ? (
-                <Divider mt={5} mb={15} color="gray" />
-              ) : null}
-            </View>
+            <View key={i}>{section(i + 1 !== content.length)}</View>
           ))}
         </Page>
       </Document>

@@ -1,12 +1,12 @@
 import React from 'react';
-import { BodyText, Divider, Section, Title } from './styled';
+import { NormalText, Divider, Section, Title } from './styled';
 
 export default function Profile({ data }) {
   return data ? (
     <>
       <Section>
         <Title>Profile</Title>
-        <BodyText style={[{ textAlign: 'justify' }]}>{data}</BodyText>
+        <NormalText textAlign="justify">{data}</NormalText>
       </Section>
       <Divider mt={5} mb={15} color="gray" />
     </>

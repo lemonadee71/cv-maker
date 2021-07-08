@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from '@react-pdf/renderer';
+import { StyleSheet, Text } from '@react-pdf/renderer';
 import React from 'react';
-import { Section, Title } from './styled';
+import { Divider, Section, Title, Wrapper } from './styled';
 
 const style = StyleSheet.create({
   skills: {
@@ -18,17 +18,24 @@ const style = StyleSheet.create({
   },
 });
 
-export default function Skills({ data }) {
+export default function Skills({ data, withDivider }) {
   return data ? (
-    <Section>
-      <Title>Skills</Title>
-      <View style={[style.skills]}>
-        {data.split(',').map((skill, i) => (
-          <View key={i} style={[style.chip, { marginBottom: 5 }]}>
-            <Text>{skill.trim()}</Text>
-          </View>
-        ))}
-      </View>
-    </Section>
+    <>
+      <Section>
+        <Title>Skills</Title>
+        <Wrapper {...style.skills}>
+          {data.split(',').map((skill, i) => (
+            <Wrapper
+              key={i}
+              {...style.chip}
+              marginBottom={i + 1 === data.length ? 0 : 5}
+            >
+              <Text>{skill.trim()}</Text>
+            </Wrapper>
+          ))}
+        </Wrapper>
+      </Section>
+      {withDivider ? <Divider mt={5} mb={15} color="gray" /> : null}
+    </>
   ) : null;
 }

@@ -1,31 +1,42 @@
 import React from 'react';
-import { View } from '@react-pdf/renderer';
-import { BodyText, Section, Subtitle, Title } from './styled';
-import globalStyles from './styles';
+import {
+  Divider,
+  NormalText,
+  Section,
+  Subtitle,
+  Title,
+  Wrapper,
+} from './styled';
 
-export default function GenericSection({ name, data, mappings }) {
+export default function GenericSection({ name, data, mappings, withDivider }) {
   return data.length ? (
-    <Section>
-      <Title>{name}</Title>
-      {data.map((entry, i) => (
-        <View
-          key={i}
-          style={{ marginBottom: i + 1 === data.length ? 0 : 10 }}
-          wrap={false}
-        >
-          <View style={globalStyles.textWithDate}>
-            <Subtitle>{entry[mappings[0]]}</Subtitle>
-            <BodyText style={[{ color: 'gray' }]}>
-              {entry[mappings[1]]} -{' '}
-              {entry[mappings[2]] || (entry[mappings[1]] ? 'Present' : '')}
-            </BodyText>
-          </View>
-          <BodyText style={[{ marginBottom: 5 }]}>
-            {entry[mappings[3]]}
-          </BodyText>
-          <BodyText>{entry[mappings[4]]}</BodyText>
-        </View>
-      ))}
-    </Section>
+    <>
+      <Section>
+        <Title>{name}</Title>
+        {data.map((entry, i) => (
+          <Wrapper
+            key={i}
+            wrap={false}
+            marginBottom={i + 1 === data.length ? 0 : 10}
+          >
+            <Wrapper
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Subtitle>{entry[mappings[0]]}</Subtitle>
+              <NormalText color="gray">
+                {entry[mappings[1]]} -{' '}
+                {entry[mappings[2]] || (entry[mappings[1]] ? 'Present' : '')}
+              </NormalText>
+            </Wrapper>
+            <NormalText marginBottom={5}>{entry[mappings[3]]}</NormalText>
+            <NormalText>{entry[mappings[4]]}</NormalText>
+          </Wrapper>
+        ))}
+      </Section>
+      {withDivider ? <Divider mt={5} mb={15} color="gray" /> : null}
+    </>
   ) : null;
 }
