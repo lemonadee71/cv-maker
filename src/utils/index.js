@@ -1,15 +1,6 @@
-import { uniqid } from './uniqid';
-import {
+export { uniqid } from './uniqid';
+export {
   convertFormBlockSchema,
   convertFormGroupSchema,
 } from './convertFormSchema';
-import { reduceToValue } from './reduceToValue';
-import { capitalizeEach } from './capitalizeEach';
-
-export {
-  uniqid,
-  convertFormBlockSchema,
-  convertFormGroupSchema,
-  reduceToValue,
-  capitalizeEach,
-};
+export { reduceToValue } from './reduceToValue';
