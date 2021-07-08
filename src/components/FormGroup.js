@@ -114,8 +114,7 @@ const FormGroup = ({
     const props = {
       label: schema.displayName,
       defaultValue: schema.defaultValue,
-      value:
-        formData[name].value || (schema.type === 'date' ? null : undefined),
+      value: formData[name].value || (schema.type === 'date' ? null : ''),
       error: formData[name].error || false,
       helperText: formData[name].errorMsg || schema.helperText || '',
       placeholder: schema.placeholder || '',
@@ -125,7 +124,7 @@ const FormGroup = ({
       rows: schema.muiStyle.rows,
       fullWidth: schema.muiStyle.fullWidth || true,
       required: schema.required,
-      autoComplete: schema.autocomplete,
+      // autoComplete: schema.autocomplete,
     };
 
     if (schema.type === 'multiline') {

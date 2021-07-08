@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-  Page,
-  Document,
-  StyleSheet,
-  View,
-  PDFViewer,
-} from '@react-pdf/renderer';
-import { useFormReducer } from '../../context';
-import { reduceToValue } from '../../utils';
-// import formData from '../../defaultData.json';
+import { Page, Document, StyleSheet, View } from '@react-pdf/renderer';
 
 import Header from './Header';
 import Profile from './Profile';
@@ -24,14 +15,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const Preview = () => {
-  const { data } = useFormReducer();
-  const formData = reduceToValue(data);
+const PDF = ({ data }) => {
   const content = [
     (withDivider) => (
       <GenericSection
         name="Experience"
-        data={formData.experience}
+        data={data.experience}
         mappings={[
           'position',
           'startDate',
@@ -45,7 +34,7 @@ const Preview = () => {
     (withDivider) => (
       <GenericSection
         name="Education"
-        data={formData.education}
+        data={data.education}
         mappings={['school', 'startDate', 'endDate', 'degree']}
         withDivider={withDivider}
       />
@@ -53,29 +42,27 @@ const Preview = () => {
     (withDivider) => (
       <GenericSection
         name="Training / Certifications"
-        data={formData.training}
+        data={data.training}
         mappings={['name', 'startDate', 'endDate']}
         withDivider={withDivider}
       />
     ),
     (withDivider) => (
-      <Skills data={formData.personal[0].skills} withDivider={withDivider} />
+      <Skills data={data.personal[0].skills} withDivider={withDivider} />
     ),
   ];
 
   return (
-    <PDFViewer width="100%" height="700px">
-      <Document className="preview">
-        <Page size="A4" style={styles.page} wrap>
-          <Header data={formData.personal[0]} />
-          <Profile data={formData.personal[0].details} />
-          {content.map((section, i) => (
-            <View key={i}>{section(i + 1 !== content.length)}</View>
-          ))}
-        </Page>
-      </Document>
-    </PDFViewer>
+    <Document className="preview">
+      <Page size="A4" style={styles.page} wrap>
+        <Header data={data.personal[0]} />
+        <Profile data={data.personal[0].details} />
+        {content.map((section, i) => (
+          <View key={i}>{section(i + 1 !== content.length)}</View>
+        ))}
+      </Page>
+    </Document>
   );
 };
 
-export default Preview;
+export default PDF;
