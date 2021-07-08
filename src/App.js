@@ -10,7 +10,7 @@ import AlertTitle from '@material-ui/lab/AlertTitle';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import Preview from './components/PDF';
+import Download from './components/PDF';
 import Form from './components/Form';
 import { FormProvider } from './context';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -86,7 +86,7 @@ const App = () => {
                     Go Back to Editing
                   </Button>
                 </Box>
-                <Preview />
+                <Download />
               </Box>
             ) : (
               <Form schema={cvFormSchema} onSubmit={handleSubmit} />
