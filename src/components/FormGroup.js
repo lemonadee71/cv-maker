@@ -32,6 +32,9 @@ const FormGroup = ({
     });
   }, [debouncedFormData, id, blockName, dispatch]);
 
+  // This is used to reflect the errors caught on submit
+  // * Remove if there's onsubmit validation
+  // ! This may cause unnecessary renders
   useEffect(() => {
     setFormData(data);
   }, [data, setFormData]);
@@ -71,7 +74,7 @@ const FormGroup = ({
     setFormData((prevData) => ({ ...prevData, [name]: newData }));
   };
 
-  const determineInput = (type, name, props) => {
+  const createInput = (type, name, props) => {
     switch (type) {
       case 'phone':
         return (
@@ -86,12 +89,8 @@ const FormGroup = ({
         return (
           <DatePicker
             {...props}
-            onChange={(date) => {
-              handleChange(name, date);
-            }}
-            onAccept={(date) => {
-              handleBlur(name, date);
-            }}
+            onChange={(date) => handleChange(name, date)}
+            onAccept={(date) => handleBlur(name, date)}
             placeholder="14/01/1970"
             format="dd/MM/yyyy"
             inputVariant="outlined"
@@ -120,13 +119,13 @@ const FormGroup = ({
       error: formData[name].error || false,
       helperText: formData[name].errorMsg || schema.helperText || '',
       placeholder: schema.placeholder || '',
-      inputProps: { 'data-fieldname': name },
+      inputProps: { name },
       InputLabelProps: schema.type === 'date' ? { shrink: true } : null,
       variant: blockStyle.variant,
       rows: schema.muiStyle.rows,
       fullWidth: schema.muiStyle.fullWidth || true,
       required: schema.required,
-      autoComplete: schema.autoComplete,
+      autoComplete: schema.autocomplete,
     };
 
     if (schema.type === 'multiline') {
@@ -136,7 +135,7 @@ const FormGroup = ({
     return (
       // Assume that schema always has muiStyle
       <Grid item key={id + name} {...schema.muiStyle.span}>
-        {determineInput(schema.type, name, props)}
+        {createInput(schema.type, name, props)}
       </Grid>
     );
   });
